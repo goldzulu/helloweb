@@ -3,9 +3,19 @@
     "publishingInformation": {
       "locales": {
         "en-US": {
-          "summary": "Sample Short Description",
+          "summary": "Alexa WebAPI Phaser3 Boilerplate",
           "examplePhrases": [
-            "Alexa open hello world",
+            "Alexa open hello web",
+            "hello",
+            "help"
+          ],
+          "name": "hello web",
+          "description": "Sample Full Description"
+        },
+        "en-GB": {
+          "summary": "Alexa WebAPI Phaser3 Boilerplate",
+          "examplePhrases": [
+            "Alexa open hello web",
             "hello",
             "help"
           ],
