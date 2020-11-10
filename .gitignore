@@ -4,6 +4,7 @@ package-lock.json
 .ask/
 .ask
 .ask/ask-states.json
+/.ask
 skill-package/skill*.json
 skill-package/skill.json
 /dist
