@@ -29,7 +29,11 @@
       "distributionCountries": []
     },
     "apis": {
-      "custom": {}
+      "custom": {
+        "endpoint": {
+          "uri": "arn:aws:lambda:us-east-1:722383165419:function:ask-helloweb-default-skillStack-AlexaSkillFunction-1TCN1T8SRODRI"
+        }
+      }
     },
     "manifestVersion": "1.0"
   }
