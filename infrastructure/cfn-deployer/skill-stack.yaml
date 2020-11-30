@@ -34,7 +34,39 @@ Resources:
                 - Effect: Allow
                   Action:
                     - logs:*
-                  Resource: arn:aws:logs:*:*:*
+                    - S3:*
+                  Resource: "*"
+  S3UserDataBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Delete
+  S3WebAppBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Delete
+  S3OriginAccessID:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties: 
+      CloudFrontOriginAccessIdentityConfig: 
+        Comment: Origin Access Identity for S3. 
+  CloudfrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        DefaultCacheBehavior:
+          AllowedMethods: [GET, HEAD]
+          CachedMethods: [GET, HEAD]
+          DefaultTTL: 3600 #This is deprecated. Recomendation is to use Cache Policy but not exposed in CFN
+          TargetOriginId: WebAppCloudfrontDistribution
+          ViewerProtocolPolicy: https-only
+          ForwardedValues:
+            QueryString: false
+        Enabled: true
+        Origins:
+          - DomainName: !GetAtt [S3WebAppBucket, DomainName]
+            S3OriginConfig : 
+              OriginAccessIdentity: !Sub
+                - origin-access-identity/cloudfront/${originAccessParam}
+                - originAccessParam: !Ref S3OriginAccessID
+            Id: WebAppCloudfrontDistribution
   AlexaSkillFunction:
     Type: AWS::Lambda::Function
     Properties:
@@ -47,6 +79,10 @@ Resources:
       Role: !GetAtt AlexaSkillIAMRole.Arn
       MemorySize: 512
       Timeout: 60
+      Environment:
+        Variables:
+          Domain: !GetAtt [CloudfrontDistribution, DomainName]
+          S3_PERSISTENCE_BUCKET: {Ref: S3UserDataBucket}
   AlexaSkillFunctionEventPermission:
     Type: AWS::Lambda::Permission
     Properties:
@@ -63,3 +99,12 @@ Outputs:
   SkillEndpoint:
     Description: LambdaARN for the regional endpoint
     Value: !GetAtt AlexaSkillFunction.Arn
+  WebsiteURL:
+    Value: !GetAtt [S3WebAppBucket, WebsiteURL]
+    Description: URL for website hosted on S3
+  S3BucketSecureURL:
+    Value: !Join ['', ['https://', !GetAtt [S3WebAppBucket, DomainName]]]
+    Description: Name of S3 bucket to hold website content
+  CloudFrontURL:
+    Value: !GetAtt [CloudfrontDistribution, DomainName]
+    Description: Website cloudfront URL

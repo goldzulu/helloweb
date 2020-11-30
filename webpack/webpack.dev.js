@@ -5,7 +5,9 @@ const dev = {
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
-    open: true
+    open: true,
+    host: '0.0.0.0',
+    disableHostCheck: true
   }
 }
 

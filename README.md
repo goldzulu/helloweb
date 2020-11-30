@@ -2,12 +2,12 @@
   <br>
   <a href="https://github.com/goldzulu/helloweb#readme"><img src="readme/header.png" alt="header" width="600"></a>
   <br>
-  Alexa Skill / WebAPI Using Phaser 3 TypeScript Starter Template
+  Alexa Skill WebAPI Phaser 3 TypeScript Webpack Starter Template
   <br>
 </h1>
 
 <h4 align="center">
-A starter template for Alexa Skill and Web API Using <a href="https://phaser.io/" target="_blank" >Phaser 3</a> with <a href="https://www.typescriptlang.org/index.html" target="_blank" >TypeScript</a> and <a href="https://webpack.js.org/" target="_blank" >webpack</a> for building excellent html5-games that work great in the browser and on mobile devices.</h4>
+A starter template for Alexa Skill WebAPI for Games Using <a href="https://phaser.io/" target="_blank" >Phaser 3</a> with <a href="https://www.typescriptlang.org/index.html" target="_blank" >TypeScript</a> and <a href="https://webpack.js.org/" target="_blank" >webpack</a> for building excellent html5-games that work great in the browser and on mobile devices.</h4>
 
 <p align="center">
   <a href="#key-features">Key Features</a> •
@@ -192,4 +192,5 @@ A huge thank you to Rich [@photonstorm](https://github.com/photonstorm) for crea
 
 ## License
 
-The MIT License (MIT) 2019 - [Yannick Deubel](https://github.com/yandeu). Please have a look at the [LICENSE](LICENSE) for more details.
+Music: The Elevator Bossa Nova from Bensound.com
+Phaser-Starter-Template - The MIT License (MIT) 2019 - [Yannick Deubel](https://github.com/yandeu). Please have a look at the [LICENSE](LICENSE) for more details.

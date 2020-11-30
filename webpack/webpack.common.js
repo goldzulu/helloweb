@@ -29,11 +29,12 @@ module.exports = {
     }
   },
   plugins: [
-    new HtmlWebpackPlugin({ gameName: 'My Phaser Game', template: 'src/index.html' }),
+    new HtmlWebpackPlugin({ gameName: 'Hello Web', template: 'src/index.html' }),
     new CopyWebpackPlugin([
       { from: 'src/assets', to: 'assets' },
       { from: 'pwa', to: '' },
-      { from: 'src/favicon.ico', to: '' }
+      { from: 'src/favicon.ico', to: '' },
+      { from: 'src/fontLoader.js', to: 'script/fontLoader.js' }
     ]),
     new InjectManifest({
       swSrc: path.resolve(__dirname, '../pwa/sw.js')

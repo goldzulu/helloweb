@@ -8,7 +8,9 @@
     "start": "webpack-dev-server --config webpack/webpack.dev.js",
     "build": "webpack --config webpack/webpack.prod.js",
     "bundle": "npm run build",
-    "serve": "serve dist"
+    "serve": "serve dist",
+    "deploy:s3": "(npm run build && aws s3 cp ./dist s3://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog/dist/v1 --recursive --acl public-read)",
+    "web": "open https://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog.s3.amazonaws.com/dist/index.html"
   },
   "keywords": [
     "Phaser",

@@ -8,7 +8,7 @@
           "deployState": {
             "default": {
               "s3": {
-                "bucket": "ask-helloweb-askclidef-useast1-1604966366893",
+                "bucket": "ask-helloweb-askclidef-useast1-1606574701869",
                 "key": "endpoint/build.zip"
               },
               "stackId": "arn:aws:cloudformation:us-east-1:722383165419:stack/ask-helloweb-default-skillStack-1604966366893/a1963e60-22e7-11eb-a5f5-0a7c595099af",
@@ -17,6 +17,21 @@
                   "OutputKey": "SkillEndpoint",
                   "OutputValue": "arn:aws:lambda:us-east-1:722383165419:function:ask-helloweb-default-skillStack-AlexaSkillFunction-1TCN1T8SRODRI",
                   "Description": "LambdaARN for the regional endpoint"
+                },
+                {
+                  "OutputKey": "CloudFrontURL",
+                  "OutputValue": "d1j6p3d7cfhhjw.cloudfront.net",
+                  "Description": "Website cloudfront URL"
+                },
+                {
+                  "OutputKey": "S3BucketSecureURL",
+                  "OutputValue": "https://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog.s3.amazonaws.com",
+                  "Description": "Name of S3 bucket to hold website content"
+                },
+                {
+                  "OutputKey": "WebsiteURL",
+                  "OutputValue": "http://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog.s3-website-us-east-1.amazonaws.com",
+                  "Description": "URL for website hosted on S3"
                 }
               ]
             }
@@ -24,11 +39,11 @@
         }
       },
       "skillMetadata": {
-        "lastDeployHash": "lc9967uyrYpwFboQrwle4y1VI/4="
+        "lastDeployHash": "H7gFzqPY4Ibdj0AK4utpPWRJBHQ="
       },
       "code": {
         "default": {
-          "lastDeployHash": "0DoZ6Aj+xnTLfvm1u5s04+UMT2k="
+          "lastDeployHash": "VV60QAHFD/B52sHhwoaNaRgOBWA="
         }
       }
     }

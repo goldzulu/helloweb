@@ -1,20 +1,123 @@
-// This sample demonstrates handling intents from an Alexa skill using the Alexa Skills Kit SDK (v2).
-// Please visit https://alexa.design/cookbook for additional examples on implementing slots, dialog management,
-// session persistence, api calls, and more.
 const Alexa = require('ask-sdk-core');
+const WebAPI = require('./webapi');
+
+// CONSTANTS
+const LOG_INFO = "INFO";
+const LOG_ERROR = "ERROR";
+const LOG_WARNING = "WARNING";
+
+// CacheBuster - the index file will be at /dist/vX/index.html  where X is the version number below
+// You would need to make sure when copying to S3 the /dist directory is copied to /dist/vX on S3
+const VERSION = '1';
+
+// CONFIG
+// TODO: change this URL to your publicly accessible HTTPS endpoint
+
+// This will get the Domain from the lambda environment set during cloudformation deployment
+const webAppBaseURL = `https://${process.env.Domain}`; 
+
+// This is a convenient variable that you can set to an S3 bucket or elsewhere for instance when cloudfront takes a few min to propagate
+// Set to '' if not in use. If set it will override the above
+//const webAppS3URL = 'https://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog.s3.amazonaws.com/dist/index.html'
+const webAppS3URL = ''
+const webAppLocalURL = 'https://325e96a04085.ngrok.io/'
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = 'Welcome to the Alexa Web A P I Phaser 3 boilerplate you can say Hello or Help. Which would you like to try?';
-        return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .reprompt(speakOutput)
-            .getResponse();
+        let speakOutput = "";
+        let reprompt = "";
+
+        // Check that the device supports Web API
+        const supportedInterfaces = Alexa.getSupportedInterfaces(handlerInput.requestEnvelope);
+        const htmlInterface = supportedInterfaces['Alexa.Presentation.HTML'];
+        if(htmlInterface !== null && htmlInterface !== undefined) {
+            // Device is capable of utilizing WebAPI
+            speakOutput = 'Welcome to the Alexa Web A P I Phaser 3 boilerplate. Ask me to say something';
+            reprompt = 'Which would you like to try?';
+
+            speakOutput += reprompt;
+            conditionallyLaunchWebApp(handlerInput);
+            handlerInput.responseBuilder.speak(speakOutput);
+
+            if(isHTMLCapableFireTV(handlerInput)) {
+                return handlerInput.responseBuilder.getResponse();
+            }
+
+            return handlerInput.responseBuilder
+                .reprompt(speakOutput)
+                .getResponse();
+        }
+        else
+        {
+            // exits the skill
+            speakOutput = 'Apologies. It seems that your device is not capable of displaying the graphics needed for this game. Goodbye!';
+            return handlerInput.responseBuilder
+                .speak(speakOutput)
+                .getResponse();
+        }
     }
 };
+
+const conditionallyLaunchWebApp = (handlerInput) => {
+    if(supportsHTMLInterface(handlerInput)) {
+        dlog(LOG_INFO, "Supports Web API/HTML");
+
+        // path for index.html, different if served locally than on s3/cloudfront
+        let indexPath;
+
+        if (webAppLocalURL) 
+        {
+            indexPath = 'index.html' 
+        } 
+        else  
+        { 
+            indexPath = `/dist/v${VERSION}/index.html`
+        }
+
+        handlerInput.responseBuilder.addDirective({
+            type:"Alexa.Presentation.HTML.Start",
+            data: createStateFromSessionAttr(handlerInput.attributesManager.getSessionAttributes()),
+            request: {
+                uri: (webAppLocalURL || webAppS3URL || webAppBaseURL ) + indexPath,
+                method: "GET"
+            },
+            configuration: {
+               "timeoutInSeconds": 300
+            }});
+    }
+}
+
+const supportsHTMLInterface = (handlerInput) => {
+    const supportedInterfaces = Alexa.getSupportedInterfaces(handlerInput.requestEnvelope);
+    const htmlInterface = supportedInterfaces['Alexa.Presentation.HTML'];
+    console.log(supportedInterfaces);
+    
+    return htmlInterface !== null && htmlInterface !== undefined;
+}
+
+const dlog = (type, message) => {
+    console.log(type + " : " + message);
+}
+
+//takes in everything in the current sessions and pass it to the WebAPI portion
+const createStateFromSessionAttr = (sessionAttrs) => {
+    let dataPayload = sessionAttrs;
+    return dataPayload;
+}
+
+/**
+ * Checks if a fireTV is requesting our skill. 
+ * If so, use this to NOT include a reprompt to avoid push to talk experience.
+ * @param {*} handlerInput 
+ */
+function isHTMLCapableFireTV(handlerInput) {
+    return supportsHTMLInterface(handlerInput) 
+            && Alexa.getViewportProfile(handlerInput.requestEnvelope).includes("TV")
+}
+
 const HelloWorldIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
@@ -42,6 +145,28 @@ const HelpIntentHandler = {
             .getResponse();
     }
 };
+
+const SaySomethingIntentHandler = {
+    canHandle(handlerInput) {
+      return (
+        Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" &&
+        Alexa.getIntentName(handlerInput.requestEnvelope) === "SaySomethingIntent"
+      );
+    },
+    handle(handlerInput) {
+      const speakOutput = "<speak>I was asked to say something</speak>";
+  
+      if (supportsHTMLInterface(handlerInput)) {
+        return handlerInput.responseBuilder
+          .addDirective(WebAPI.sendWebAPIMessage({type:"speak", payload:"And I have spoken"}))
+          .speak(speakOutput)
+          .getResponse();
+      } else {
+        return handlerInput.responseBuilder.speak(speakOutput).getResponse();
+      }
+    },
+  };
+
 const CancelAndStopIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
@@ -110,6 +235,7 @@ exports.handler = Alexa.SkillBuilders.custom()
         LaunchRequestHandler,
         HelloWorldIntentHandler,
         HelpIntentHandler,
+        SaySomethingIntentHandler,
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler,
         IntentReflectorHandler, // make sure IntentReflectorHandler is last so it doesn't override your custom intent handlers
