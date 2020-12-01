@@ -35,17 +35,21 @@ $ cd alexa-webapi-game
 # Initialise Alexa Skill
 $ ask init
 
-# Deploy Alexa Skill Portion Using CloudFormation - IMPORTANT: Take note of the public read s3 url
+# Deploy Alexa Skill Portion Using CloudFormation - IMPORTANT: Take note of the s3BucketSecureUrl after you have deployed
+# If you have missed it, look in .ask/ask-states.json for "OutputKey": "S3BucketSecureURL". You JUST NEED the first part of the 
+# URL, normally in this form ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog
 $ ask deploy
 
 # Look package.json in the root of the project
 # Modify the lines deploy:s3. replace the s3 bucket name below with the public read s3 bucket generated from the above
-# Make sure you leave the /dist/v1 at the end as it is below
+# Make sure you leave the /dist/v1 at the end as it is below. also note that it's s3:// in front and not https://
+# 
 
 (npm run build && aws s3 cp ./dist s3://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog/dist/v1 --recursive --acl public-read)
 
-# Optionally, if on a mac and if you want to be able to test on s3 easily you can overwrite the public https url below 
-# Replace the s3 bucket name with the one generated previously. Again make sure you retain the /dist/v1/index.html at the end
+# Optionally, if on a mac and if you want to be able to test on s3 easily you can overwrite the url in package.json for the serve:s3  
+# This time, take note of the ENTIRE url related to the output key S3BucketSecureURL
+# This time use https:// and include the domain names full url. Again make sure you retain the /dist/v1/index.html at the end
 
 open https://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog.s3.amazonaws.com/dist/v1/index.html
 
