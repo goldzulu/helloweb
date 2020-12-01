@@ -9,7 +9,6 @@ import BaseScene from './baseScene'
 
 import * as ALEXA_CONST from '../constants/alexa_const'
 
-
 // says the the variable alexa exists
 //declare var Alexa: any;
 
@@ -60,7 +59,7 @@ export default class MainScene extends BaseScene {
   onAlexaMessage(message): void {
     this.add
       .text(this.cameras.main.width - 15, 15, `m ${message.type}`, {
-        color: '#000000',
+        color: '#ffffff',
         fontSize: 24
       })
       .setOrigin(1, 0)

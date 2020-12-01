@@ -1,12 +1,9 @@
 node_modules/
 package-lock.json
 .DS_Store
-.ask/
 .ask
-.ask/ask-states.json
-/.ask
-skill-package/skill*.json
-skill-package/skill.json
+.ask/ask-states-local.json
+skill-package/skill-local.json
 /dist
 /.cache
 /.vscode

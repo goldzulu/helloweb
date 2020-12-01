@@ -1,13 +1,16 @@
 import 'phaser'
+
+import TitleScene from './scenes/titleScene'
+import LoadScene from './scenes/loadScene'
 import MainScene from './scenes/mainScene'
-import PreloadScene from './scenes/preloadScene'
 
+// Nicest on Most Echos
+const DEFAULT_WIDTH = 1920
+const DEFAULT_HEIGHT = 1080
 
-// const DEFAULT_WIDTH = 1280
-// const DEFAULT_HEIGHT = 720
-
-const DEFAULT_WIDTH = 960
-const DEFAULT_HEIGHT = 480
+// Nicest on Echo Show
+// const DEFAULT_WIDTH = 960
+// const DEFAULT_HEIGHT = 480
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.WEBGL,
@@ -19,7 +22,7 @@ const config: Phaser.Types.Core.GameConfig = {
     width: DEFAULT_WIDTH,
     height: DEFAULT_HEIGHT
   },
-  scene: [PreloadScene, MainScene],
+  scene: [LoadScene, TitleScene, MainScene],
   physics: {
     default: 'arcade',
     arcade: {

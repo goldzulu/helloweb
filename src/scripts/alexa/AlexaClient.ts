@@ -48,8 +48,8 @@ export default class AlexaClient {
             emitter.emit(ALEXA_CONST.ONSTOPPED)
           })
 
-          // Finally
-          emitter.emit(ALEXA_CONST.ONREADY, message)
+          // Finally THIS IS Currently not captured because it is triggered before the phaser events are setup
+          // emitter.emit(ALEXA_CONST.ONREADY, message)
         })
         .catch((error) => {
           // Emit the error

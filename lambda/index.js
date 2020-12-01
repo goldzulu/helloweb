@@ -6,21 +6,20 @@ const LOG_INFO = "INFO";
 const LOG_ERROR = "ERROR";
 const LOG_WARNING = "WARNING";
 
-// CacheBuster - the index file will be at /dist/vX/index.html  where X is the version number below
+// CacheBuster - the index file on cloudfront/s3 will be at /dist/vX/index.html  where X is the version number below
 // You would need to make sure when copying to S3 the /dist directory is copied to /dist/vX on S3
 const VERSION = '1';
 
 // CONFIG
-// TODO: change this URL to your publicly accessible HTTPS endpoint
-
 // This will get the Domain from the lambda environment set during cloudformation deployment
 const webAppBaseURL = `https://${process.env.Domain}`; 
 
 // This is a convenient variable that you can set to an S3 bucket or elsewhere for instance when cloudfront takes a few min to propagate
-// Set to '' if not in use. If set it will override the above
+// Set to '' if not in use. If set it will override the above. Leave it as it is if you don't know what I am talking about!
 //const webAppS3URL = 'https://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog.s3.amazonaws.com/dist/index.html'
 const webAppS3URL = ''
-const webAppLocalURL = 'https://325e96a04085.ngrok.io/'
+//const webAppLocalURL = 'https://325e96a04085.ngrok.io/'
+const webAppLocalURL = ''
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {

@@ -13,7 +13,6 @@ export default class TextStyles {
     static SIZE_SMALL2: number;
     static MAIN_FONT: string;
     static DEFAULT: string;
-    
 
     private constructor(width) {
         this.setConstants(width);
@@ -38,7 +37,7 @@ export default class TextStyles {
         TextStyles.SIZE_MED2 = width / 25;
         TextStyles.SIZE_SMALL = width / 30;
         TextStyles.SIZE_SMALL2 = width / 40;
-        TextStyles.MAIN_FONT="Impact";
+        TextStyles.MAIN_FONT="Flamenco";
 
         this.styles = [];
         this.styles[TextStyles.DEFAULT] = {
@@ -180,7 +179,7 @@ export default class TextStyles {
         this.styles['BUTTON_STYLE'] = {
             style: {
                 fontFamily: TextStyles.MAIN_FONT,
-                fontSize: TextStyles.SIZE_MED3,
+                fontSize: TextStyles.SIZE_MED,
                 color: "#ffffff",
             },
             shadow: "#000000"

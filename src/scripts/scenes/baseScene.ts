@@ -1,51 +1,36 @@
-import Align from "../common/util/align";
-import 
-  TextObj
- from "../common/ui/textObj";
-import 
-  AlignGrid
- from "../common/util/alignGrid";
-import Model from "../common/mc/model";
-import 
-  EventDispatcher
- from "../common/mc/eventDispatcher";
-import 
-  Background
- from "../common/comps/background";
-import 
-  TextStyles
- from "../common/ui/textStyles";
-import 
-  Controller
- from "../common/mc/controller";
-// import 
+import Align from '../common/util/align'
+import TextObj from '../common/ui/textObj'
+import AlignGrid from '../common/util/alignGrid'
+import Model from '../common/mc/model'
+import EventDispatcher from '../common/mc/eventDispatcher'
+import Background from '../common/comps/background'
+import TextStyles from '../common/ui/textStyles'
+import Controller from '../common/mc/controller'
+// import
 //   SoundPanel
 //  from "../common/ui/soundPanel";
-import 
-  MediaManager
- from "../common/util/mediaManager";
+import MediaManager from '../common/util/mediaManager'
 
-import AlexaClient from  '../alexa/AlexaClient'
+import AlexaClient from '../alexa/AlexaClient'
 import * as ALEXA_CONST from '../constants/alexa_const'
 
 // says the the variable alexa exists
 //declare var Alexa: any;
 
 export default class BaseScene extends Phaser.Scene {
-
-  alexa: AlexaClient;
-  emitter: Phaser.Events.EventEmitter;
-  gw:integer|string;
-  gh:integer|string;
-  mm: MediaManager;
-  controller: Controller;
-  model: Model;
-  textStyles: TextStyles;
-  aGrid: AlignGrid;
+  alexa: AlexaClient
+  emitter: Phaser.Events.EventEmitter
+  gw: integer | string
+  gh: integer | string
+  mm: MediaManager
+  controller: Controller
+  model: Model
+  textStyles: TextStyles
+  aGrid: AlignGrid
 
   constructor(key) {
-    super(key);
-    this.alexa = AlexaClient.getInstance();
+    super(key)
+    this.alexa = AlexaClient.getInstance()
   }
 
   init() {}
@@ -53,106 +38,106 @@ export default class BaseScene extends Phaser.Scene {
   preload() {}
 
   create() {
-      //
-      //make the media manager
-      this.mm = MediaManager.getInstance({
-          scene: this
-      });
-      //
-      //create the controller to listen to events
-      //
-      // WARNING, Media Manager must be initialised first
-      this.controller = Controller.getInstance();
-      //
-      //set up model to hold global values
-      //
-      this.model = Model.getInstance();
-      //
-      //set up the event dispatcher
-      //
-      this.emitter = EventDispatcher.getInstance();
-    
-    //Register all the events to listen to
-    this.emitter.on(ALEXA_CONST.ONMESSAGE,this.onAlexaMessage.bind(this));
+    //
+    //make the media manager
+    this.mm = MediaManager.getInstance({
+      scene: this,
+    })
+    //
+    //create the controller to listen to events
+    //
+    // WARNING, Media Manager must be initialised first
+    this.controller = Controller.getInstance()
+    //
+    //set up model to hold global values
+    //
+    this.model = Model.getInstance()
+    //
+    //set up the event dispatcher
+    //
+    this.emitter = EventDispatcher.getInstance()
 
-        //
-        //set up the text styles object
-        //
-        this.textStyles = TextStyles.getInstance(this.sys.game.config.width);
-    this.gw = this.sys.game.config.width;
-    this.gh = this.sys.game.config.height;    
+    //Register all the events to listen to
+    this.emitter.on(ALEXA_CONST.ONMESSAGE, this.onAlexaMessage.bind(this))
+
+    //
+    //set up the text styles object
+    //
+    this.textStyles = TextStyles.getInstance(this.sys.game.config.width)
+    this.gw = this.sys.game.config.width
+    this.gh = this.sys.game.config.height
   }
 
   protected onAlexaMessage(message): void {}
 
-//
-    //set a background image
-    //
-    setBackground(key) {
-      let bg = new Background({
-          scene: this,
-          key: key
-      });
-      return bg;
+  //
+  //set a background image
+  //
+  setBackground(key) {
+    let bg = new Background({
+      scene: this,
+      key: key,
+    })
+    return bg
   }
   //
   //place an image on the stage, and scale it
   //
   placeImage(key, pos, scale, physics = false) {
-      let image
-      if (physics == false) {
-          image = this.add.sprite(0, 0, key);
-      } else {
-          image = this.physics.add.sprite(0, 0, key);
-      }
-      if (isNaN(pos)) {
-          this.aGrid.placeAt(pos.x, pos.y, image);
-      } else {
-          this.aGrid.placeAtIndex(pos, image);
-      }
-      if (scale != -1) {
-          Align.scaleToGameW(image, scale,this);
-      }
-      return image;
+    let image
+    if (physics == false) {
+      image = this.add.sprite(0, 0, key)
+    } else {
+      image = this.physics.add.sprite(0, 0, key)
+    }
+    if (isNaN(pos)) {
+      this.aGrid.placeAt(pos.x, pos.y, image)
+    } else {
+      this.aGrid.placeAtIndex(pos, image)
+    }
+    if (scale != -1) {
+      Align.scaleToGameW(image, scale, this)
+    }
+    return image
   }
   //
   //place text on the stage and style it
   //
   placeText(text, pos, style) {
-      let textStyle = this.textStyles.getStyle(style);
-      let textObj = new TextObj({
-          scene: this,
-          text: text,
-          textStyle: textStyle
-      });
-      if (isNaN(pos)) {
-          this.aGrid.placeAt(pos.x, pos.y, textObj);
-      } else {
-          this.aGrid.placeAtIndex(pos, textObj);
-      }
-      return textObj;
+    let textStyle = this.textStyles.getStyle(style)
+    let textObj = new TextObj({
+      scene: this,
+      text: text,
+      textStyle: textStyle,
+    })
+    if (isNaN(pos)) {
+      this.aGrid.placeAt(pos.x, pos.y, textObj)
+    } else {
+      this.aGrid.placeAtIndex(pos, textObj)
+    }
+    return textObj
   }
   //
   //place an object on the grid by index
   //
   placeAtIndex(pos, item) {
-      this.aGrid.placeAtIndex(pos, item);
+    this.aGrid.placeAtIndex(pos, item)
   }
   //
   //place an object on the grid by x and y position
   //
   placeAt(xx, yy, item) {
-      this.aGrid.placeAt(xx, yy, item);
+    this.aGrid.placeAt(xx, yy, item)
   }
   //
   //make an align grid
   //
   makeAlignGrid(r = 11, c = 11) {
-      this.aGrid = new AlignGrid({
-          scene: this,
-          rows: r,
-          cols: c
-      });
+    this.aGrid = new AlignGrid({
+      scene: this,
+      rows: r,
+      cols: c,
+    })
   }
   //
   //make a gear to open the sound panel
@@ -197,11 +182,9 @@ export default class BaseScene extends Phaser.Scene {
   //get a text style object
   //
   getStyle(style) {
-      let textStyle = this.textStyles.getStyle(style);
-      return textStyle;
+    let textStyle = this.textStyles.getStyle(style)
+    return textStyle
   }
 
   update() {}
-
-
 }

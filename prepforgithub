@@ -1,0 +1,9 @@
+#!/bin/bash
+# CAUTION: Script is used for resetting the states of the skill to a fresh one so it can be redeployed elsewhere
+#          .ask/ask-states.json skill-package/skill.json will be reset
+#          It will make a backup of the current ask-states and skill.json to ask-states-local.json and skill-local.json
+cp .ask/ask-states.json .ask/ask-states-local.json
+cp skill-package/skill.json skill-package/skill-local.json
+cp ask-states-reset.json .ask/ask-states.json
+cp skill-package/skill-reset.json skill-package/skill.json
+
