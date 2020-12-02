@@ -25,39 +25,47 @@ The repo contains both the WEBApi portion and the Alexa Skill portion. Most of w
 
 ---
 ## Quick Start
+
+Clone this repository
 ```bash
-# Clone this repository
-$ git clone --depth 1 https://github.com/goldzulu/helloweb.git alexa-webapi-game
-
-# Go into the repository
-$ cd alexa-webapi-game
-
-# Initialise Alexa Skill
-$ ask init
-
-# Deploy Alexa Skill Portion Using CloudFormation - IMPORTANT: Take note of the s3BucketSecureUrl after you have deployed
-# If you have missed it, look in .ask/ask-states.json for "OutputKey": "S3BucketSecureURL". You JUST NEED the first part of the 
-# URL, normally in this form ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog
-$ ask deploy
-
-# Look package.json in the root of the project
-# Modify the lines deploy:s3. replace the s3 bucket name below with the public read s3 bucket generated from the above
-# Make sure you leave the /dist/v1 at the end as it is below. also note that it's s3:// in front and not https://
-# 
-
-(npm run build && aws s3 cp ./dist s3://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog/dist/v1 --recursive --acl public-read)
-
-# Optionally, if on a mac and if you want to be able to test on s3 easily you can overwrite the url in package.json for the serve:s3  
-# This time, take note of the ENTIRE url related to the output key S3BucketSecureURL
-# This time use https:// and include the domain names full url. Again make sure you retain the /dist/v1/index.html at the end
-
-open https://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog.s3.amazonaws.com/dist/v1/index.html
-
-# Build the WebAPI part of the game and deploy to s3 simultaneously
-$ npm run deploy:s3
-
-# Thats it! You should be able to test on Amazon Echo smart display devices but saying Alexa, Open Hello Web
+$ git clone --depth 1 https://github.com/goldzulu/helloweb.git alexa-webapi-game```
 ```
+
+Go into the repository
+```bash
+$ cd alexa-webapi-game
+```
+
+Initialise Alexa Skill
+```bash
+$ ask init
+```
+
+Deploy Alexa Skill Portion Using CloudFormation - IMPORTANT: Take note of the s3BucketSecureUrl after you have deployed.
+If you have missed it, look in .ask/ask-states.json for "OutputKey": "S3BucketSecureURL". 
+You JUST NEED the first part of the URL, normally in this form ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog
+```bash
+$ ask deploy
+```
+Look package.json in the root of the project
+Modify the lines deploy:s3. replace the s3 bucket name below with the public read s3 bucket generated from the above
+Make sure you leave the /dist/v1 at the end as it is below. also note that it's s3:// in front and not https://
+```bash
+(npm run build && aws s3 cp ./dist s3://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog/dist/v1 --recursive --acl public-read)
+```
+
+Optionally, if on a mac and if you want to be able to test on s3 easily you can overwrite the url in package.json for the serve:s3  
+This time, take note of the ENTIRE url related to the output key S3BucketSecureURL
+This time use https:// and include the domain names full url. Again make sure you retain the /dist/v1/index.html at the end
+```bash
+open https://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog.s3.amazonaws.com/dist/v1/index.html
+```
+
+Build the WebAPI part of the game and deploy to s3 simultaneously
+```bash
+$ npm run deploy:s3
+```
+Thats it! You should be able to test on Amazon Echo smart display devices but saying Alexa, Open Hello Web
 
 ## Changing Game Names
 
@@ -97,7 +105,7 @@ A huge thank you to Rich [@photonstorm](https://github.com/photonstorm) for crea
 
 ## License
 
-MIT - This Alexa Skill WebAPI Phaser 3 TypeScript Webpack Starter Template
-Music: The Elevator Bossa Nova from Bensound.com
-Phaser-Starter-Template - The MIT License (MIT) 2019 - [Yannick Deubel](https://github.com/yandeu). Please have a look at the [LICENSE](LICENSE) for more details.
-Some convenient utilities have been adapted into Typescript from Ultimate Game Parts Template and Utilities written by William Clarkson https://phasergames.com originally in Javascript The MIT License (MIT) 2020
+* This Alexa Skill WebAPI Phaser 3 TypeScript Webpack Starter Template The MIT License (MIT) 2019 - [GoldZulu VoiceTechGuy](https://github.com/goldzulu) [LICENSE](LICENSE.txt)
+* Music: The Elevator Bossa Nova from [Bensound.com](https://www.bensound.com/licensing)
+* Phaser-Starter-Template - The MIT License (MIT) 2019 - [Yannick Deubel](https://github.com/yandeu). [LICENSE-phaser-project-template](LICENSE-phaser-project-template.txt)
+* Some convenient utilities have been adapted into Typescript from Ultimate Game Parts Template and Utilities written by [William Clarkson](https://phasergames.com) originally in javascript The MIT License (MIT) 2020 - [LICENSE-ultimate-game-parts-template](LICENSE-ultimate-game-parts-template.txt)
