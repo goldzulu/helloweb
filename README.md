@@ -28,7 +28,7 @@ The repo contains both the WEBApi portion and the Alexa Skill portion. Most of w
 
 Clone this repository
 ```bash
-$ git clone --depth 1 https://github.com/goldzulu/helloweb.git alexa-webapi-game```
+$ git clone --depth 1 https://github.com/goldzulu/helloweb.git alexa-webapi-game
 ```
 
 Go into the repository
@@ -41,9 +41,10 @@ Initialise Alexa Skill
 $ ask init
 ```
 
-Deploy Alexa Skill Portion Using CloudFormation - IMPORTANT: Take note of the s3BucketSecureUrl after you have deployed.
-If you have missed it, look in .ask/ask-states.json for "OutputKey": "S3BucketSecureURL". 
-You JUST NEED the first part of the URL, normally in this form ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog
+Deploy Alexa Skill Portion Using CloudFormation 
+> *IMPORTANT:* Take note of the _s3BucketSecureUrl_ after you have deployed.
+> If you have missed it, look in `.ask/ask-states.json` for `"OutputKey": "S3BucketSecureURL"`. 
+> You JUST NEED the first part of the URL, normally in this example form _ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog_
 ```bash
 $ ask deploy
 ```
