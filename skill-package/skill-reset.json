@@ -79,8 +79,7 @@
             {
               "type": "ALEXA_PRESENTATION_HTML"
             }
-          ],
-          "endpoint": {}
+          ]
         }
       },
       "manifestVersion": "1.0"
