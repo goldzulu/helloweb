@@ -66,7 +66,7 @@ Build the WebAPI part of the game and deploy to s3 simultaneously
 ```bash
 $ npm run deploy:s3
 ```
-Thats it! You should be able to test on Amazon Echo smart display devices but saying Alexa, Open Hello Web
+Thats it! You should be able to test using the default invocation if it has not been changed on your development Amazon Echo smart display devices but saying _Alexa, Open Hello Web_
 
 ## Changing Game Names
 
