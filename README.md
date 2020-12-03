@@ -26,7 +26,7 @@ The repo contains both the WEBApi portion and the Alexa Skill portion. Most of w
 ---
 ## Quick Start
 
-Use ask cli to initialise a new skill by using this template
+Use ask cli new to both clone and initialise a new skill by using this template
 ```bash
 $ ask new --template-url https://github.com/goldzulu/helloweb --template-branch main
 ```
@@ -42,11 +42,6 @@ $ ask new --template-url https://github.com/goldzulu/helloweb --template-branch 
 After that, go into the directory you have specified above
 ```bash
 $ cd helloweb
-```
-
-Initialise Alexa Skill
-```bash
-$ ask init
 ```
 
 Deploy Alexa Skill Portion Using CloudFormation 
