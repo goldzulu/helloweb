@@ -20,7 +20,7 @@ For instance, adding the following policies will grant all the deploy access you
 * AWSCloudFormationFullAccess
 
 <blockquote align="center">
-The repo contains both the WEBApi portion and the Alexa Skill portion. Most of what you need to do can be done by using npm run xxx. Even alexa's ask deploy and ask init is encapsulated in package.json
+The repo contains both the WEBApi portion and the Alexa Skill portion. Most of what you need to do can be done by using npm run xxx. Even alexa's ask deploy is encapsulated in package.json
 </blockquote>
 
 ---
@@ -45,49 +45,99 @@ $ cd helloweb
 ```
 
 Deploy Alexa Skill Portion Using CloudFormation 
-> *IMPORTANT:* Take note of the _s3BucketSecureUrl_ after you have deployed.
-> If you have missed it, look in `.ask/ask-states.json` for `"OutputKey": "S3BucketSecureURL"`. 
-> You JUST NEED the first part of the URL, normally in this example form _ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog_
 ```bash
 $ ask deploy
 ```
-Look package.json in the root of the project
-Modify the lines deploy:s3. replace the s3 bucket name below with the public read s3 bucket generated from the above
-Make sure you leave the /dist/v1 at the end as it is below. also note that it's s3:// in front and not https://
+*IMPORTANT:* Take note of the _s3BucketSecureUrl_ found in the file `ask-states.json` in the `.ask` folder 
+In `ask-states.json`, locate the section `"OutputKey": "S3BucketSecureURL"` right towards the end of the file
+> You JUST NEED the first part of the URL, normally in this example form of
+> `ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog`
+
+Open package.json in the root of the project. Modify the line 14 deploy:s3. replace `ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog` below
+```
+"deploy:s3": "(npm run build && aws s3 cp ./dist s3://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog/dist/v1 --recursive --acl public-read)",
+```
+with the s3 bucket name you have just recorded above.
+> *IMPORTANT:* Make sure you leave the /dist/v1 at the end as it is below.
+> Also note that it's s3:// in front and not https://
 ```bash
 (npm run build && aws s3 cp ./dist s3://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog/dist/v1 --recursive --acl public-read)
 ```
-
-Optionally, if on a mac and if you want to be able to test on s3 easily you can overwrite the url in package.json for the serve:s3  
-This time, take note of the ENTIRE url related to the output key S3BucketSecureURL
-This time use https:// and include the domain names full url. Again make sure you retain the /dist/v1/index.html at the end
-```bash
-open https://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog.s3.amazonaws.com/dist/v1/index.html
+Install all the node modules needed by running
+```bash 
+npm install
 ```
-
 Build the WebAPI part of the game and deploy to s3 simultaneously
 ```bash
 $ npm run deploy:s3
 ```
 Thats it! You should be able to test using the default invocation if it has not been changed on your development Amazon Echo smart display devices but saying _Alexa, Open Hello Web_
 
-## Changing Game Names
+## Optional Steps
 
-Change the **gameName** in /webpack/webpack.common.js and alexa skill invocation in skill-packages/skill.json
+Optionally, if you are on a mac and if you want to be able to test on s3 easily,
+you can replace `ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog` on line 15 in package.json
+```
+"serve:s3": "open https://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog.s3.amazonaws.com/dist/v1/index.html"
+```
+with the S3 bucken name you recorded in the setup.
+> This time, take note of the ENTIRE url related to the output key S3BucketSecureURL
+> This time use https:// and include the domain names full url. 
+> *IMPORTANT:* Again make sure you retain the /dist/v1/index.html at the end
+
+To test the S3 url on the browser, the web api portion of the skill, you can then just execute
+```bash
+npm run serve:s3
+```
+You can also just take note of the full https url you have modified above, cut and paste that on the browser manual if you want or if you are running on Windows machine
+
+You can also do
+`npm run start` 
+to start a local independent version of the webapi html game
+
+## Changing Game Names and Default Invocation Name
+
+If you have not changed from the default, the skill invocation is Hello Web. You can change the game name at the following locations
+* Change the **gameName** in /webpack/webpack.common.js for the WebAPI portion
+* Alexa skill invocation can be changed in skill-package/interactionModels/custom/en-US.json and en-GB.json
+*  and skill-package/skill.json
 
 ## WebAPI Game Part
 
-All your game code lies inside the **/src/scripts** folder. All assets need to be inside the **/src/assets** folder in order to get copied to /dist while creating the production build. Do not change the name of the index.html and game.ts files.
+All your game code lies inside the **/src/scripts** folder. All assets need to be inside the **/src/assets** folder in order to get copied to /dist while creating the production build. Do not change the name of the index.html and game.ts files. Most files that you need to modify would be in the **/src/scripts/scenes** folder. Once you modify them, you can do `npm run deploy:s3` to deploy to s3. `npm run start` will run a local versio of the html game in the browser.
 
 The WebAPI Part is all written in Typescript
 
 ## Alexa Skill Part
 
-All the code and config for Alexa Skill resides in the usualy lambda directory and skill-package directory.
+All the code and config for Alexa Skill resides in the usualy lambda directory for the source and the skill-package directory contains the interaction models.
 
 The Alexa Skill part have been written in node/javascript
 
+## Caching on Cloudfront
 
+Please note that by default anything deployed to s3 will subsequently be served on CloudFront. Caching on cloudfront is set to 3600 seconds which is 60 mins so any update that is being done when you do deploy:s3 will take 60 mins to take effect. So when you do some changes to the webapi game, and run on Alexa it will not be reflected immediately.
+
+There are ways to temporarily make this roundtrip faster.
+
+### Use the S3 Secure URL instead of the default CloudFront URL
+
+On line 20 of index.js in the lambda folder, there is a variable `webAppS3URL` that can be overidden. If set with the  url value of _s3BucketSecureUrl_ that can be found in `.ask/ask-states.json`, it will make the Alexa skill, once it has been deployed, to use the the s3 url instead. Set it back to '' when you are ready for production so it will use the CloudFront url instead.
+
+### Use ngrok Secure URL instead of the default CloudFront URL - RECOMMENDED
+
+If you are familiar with ngrok, on line 22 of index.js in the lambda folder, there is a variable `webAppLocalURL` that can be overidden. If set with the  https url value of _ngrok, it will make the Alexa skill, once it has been deployed, to use the the local https url instead instead. 
+
+To serve using ngrok you have to do `npm run start` to start the web server locally and then `ngrok http 8080` to open the ngrok tunnel. Copy the https url generated and paste that into the variable `webAppLocalURL`. Don't forget to set this to '' again before you certify your skill or finish your dev session.
+
+### Increment the version number for the html deployment to s3
+
+On line 11 of index.js in the lambda folder, there is a variable called VERSION. This is default set to 1.
+By incrementing this to 2 or another number and deploying the skill, the alexa skill will serve the webapi index.html  that is in the vX directory where X is the VERSION number.
+
+Please note that you need to change also package.json for the script deploy:s3 to run with the /dist/v2 instead of /dist/v1 and change it to be in sync with the variable VERSION in index.js so that when you deploy, you are deploying at the right location.
+
+---
 
 ## Useful Links
 
