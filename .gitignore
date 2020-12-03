@@ -1,8 +1,8 @@
 node_modules/
 package-lock.json
 .DS_Store
-.ask
-.ask/ask-states-local.json
+/.ask
+./ask-states-local.json
 skill-package/skill-local.json
 /dist
 /.cache
