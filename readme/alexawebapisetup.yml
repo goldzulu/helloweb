@@ -1,0 +1,349 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: zsh
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /Volumes/LACIE/biggit/test
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 101
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 20
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 75
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Terminal
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 14
+  
+  # The height of lines
+  lineHeight: 1.2
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 127
+    content: "\e]7;file://Dzulkiflees-Mac-Pro.local/Volumes/LACIE/biggit/test\a"
+  - delay: 720
+    content: "\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                                                    \r \r\e]7;file://Dzulkiflees-Mac-Pro.local/Volumes/LACIE/biggit/test\a\e]2;zoo@Dzulkiflees-Mac-Pro\a\e]1;..E/biggit/test\a\e]7;file://Dzulkiflees-Mac-Pro.local/Volumes/LACIE/biggit/test\a"
+  - delay: 32
+    content: "\r\e[0m\e[27m\e[24m\e[J\e[01;32m➜  \e[36m$\e[00m \e[K\e[?1h\e=\e[?2004h"
+  - delay: 1031
+    content: a
+  - delay: 54
+    content: "\bas"
+  - delay: 79
+    content: k
+  - delay: 101
+    content: ' '
+  - delay: 5267
+    content: 'n'
+  - delay: 100
+    content: e
+  - delay: 45
+    content: w
+  - delay: 146
+    content: ' '
+  - delay: 653
+    content: '-'
+  - delay: 135
+    content: '-'
+  - delay: 248
+    content: t
+  - delay: 202
+    content: e
+  - delay: 101
+    content: m
+  - delay: 214
+    content: p
+  - delay: 112
+    content: l
+  - delay: 169
+    content: a
+  - delay: 102
+    content: t
+  - delay: 112
+    content: e
+  - delay: 675
+    content: '-'
+  - delay: 529
+    content: u
+  - delay: 157
+    content: r
+  - delay: 104
+    content: l
+  - delay: 763
+    content: ' '
+  - delay: 259
+    content: h
+  - delay: 213
+    content: t
+  - delay: 146
+    content: t
+  - delay: 112
+    content: p
+  - delay: 215
+    content: s
+  - delay: 326
+    content: ':'
+  - delay: 270
+    content: /
+  - delay: 113
+    content: /
+  - delay: 2139
+    content: g
+  - delay: 246
+    content: i
+  - delay: 258
+    content: t
+  - delay: 428
+    content: h
+  - delay: 146
+    content: u
+  - delay: 259
+    content: b
+  - delay: 517
+    content: .
+  - delay: 372
+    content: c
+  - delay: 123
+    content: o
+  - delay: 158
+    content: m
+  - delay: 889
+    content: /
+  - delay: 427
+    content: g
+  - delay: 101
+    content: o
+  - delay: 113
+    content: l
+  - delay: 394
+    content: d
+  - delay: 337
+    content: z
+  - delay: 214
+    content: u
+  - delay: 225
+    content: l
+  - delay: 281
+    content: u
+  - delay: 506
+    content: /
+  - delay: 551
+    content: h
+  - delay: 135
+    content: e
+  - delay: 270
+    content: l
+  - delay: 237
+    content: l
+  - delay: 258
+    content: o
+  - delay: 293
+    content: w
+  - delay: 67
+    content: e
+  - delay: 237
+    content: b
+  - delay: 617
+    content: ' '
+  - delay: 810
+    content: '-'
+  - delay: 112
+    content: '-'
+  - delay: 326
+    content: t
+  - delay: 1384
+    content: e
+  - delay: 101
+    content: m
+  - delay: 236
+    content: p
+  - delay: 124
+    content: l
+  - delay: 180
+    content: a
+  - delay: 124
+    content: t
+  - delay: 135
+    content: e
+  - delay: 371
+    content: '-'
+  - delay: 338
+    content: b
+  - delay: 179
+    content: r
+  - delay: 202
+    content: a
+  - delay: 180
+    content: 'n'
+  - delay: 203
+    content: c
+  - delay: 157
+    content: h
+  - delay: 1250
+    content: ' '
+  - delay: 168
+    content: m
+  - delay: 258
+    content: a
+  - delay: 135
+    content: i
+  - delay: 270
+    content: 'n'
+  - delay: 1553
+    content: "\e[?1l\e>\e[?2004l\r\r\n\e]2;ask new --template-url https://github.com/goldzulu/helloweb --template-branch\a\e]1;ask\a"
+  - delay: 11
+    content: "\e[?25l\e[32m?\e[39m \e[1mChoose a method to host your skill's backend resources: \e[22m\e[0m \e[0m\e[2m(Use arrow keys)\e[22m\r\n\e[36m❯ Alexa-hosted skills\e[39m\r\n\e[36m  \e[90mHost your skill code by Alexa (free).\e[36m\e[39m \r\n  AWS with CloudFormation\r\n  \e[90mHost your skill code with AWS services and provision with AWS CloudFormation (requires AWS account)\r\n\e[39m \r\n  AWS Lambda\r\n  \e[90mHost your skill code on AWS Lambda (requires AWS account).\e[39m \r\n  \e[2m──────────────\e[22m\r\n  self-hosted and manage your own hosting \e[42D\e[42C"
+  - delay: 1608
+    content: "\e[2K\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[G\e[32m?\e[39m \e[1mChoose a method to host your skill's backend resources: \e[22m\e[0m \e[0m\r\n  Alexa-hosted skills\r\n  \e[90mHost your skill code by Alexa (free).\e[39m \r\n\e[36m❯ AWS with CloudFormation\e[39m\r\n\e[36m  \e[90mHost your skill code with AWS services and provision with AWS CloudFormation (requires AWS account)\r\n\e[36m\e[39m \r\n  AWS Lambda\r\n  \e[90mHost your skill code on AWS Lambda (requires AWS account).\e[39m \r\n  \e[2m──────────────\e[22m\r\n  self-hosted and manage your own hosting \e[42D\e[42C"
+  - delay: 1608
+    content: "\e[2K\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[1A\e[2K\e[G\e[32m?\e[39m \e[1mChoose a method to host your skill's backend resources: \e[22m\e[0m \e[0m\e[36mAWS with CloudFormation\e[39m\r\n\e[36m  \e[90mHost your skill code with AWS services and provision with AWS CloudFormation (requires AWS account)\r\n\e[36m\e[39m\r\n\e[0D\r\n\e[?25h\e[1m\e[33m[Warn]: CLI is about to download the skill template from unofficial template https://github.com/goldzulu/helloweb. Please make sure you understand the source code to best protect yourself from malicious usage.\e[39m\e[22m\r\n\e[32m?\e[39m \e[1mWould you like to continue download the skill template? \e[22m\e[0m \e[0m\e[2m(y/N) \e[22m\e[65D\e[65C"
+  - delay: 1608
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mWould you like to continue download the skill template? \e[22m\e[0m \e[0m\e[2m(y/N) \e[22mY\e[66D\e[66C"
+  - delay: 348
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mWould you like to continue download the skill template? \e[22m\e[0m \e[0m\e[36mYes\e[39m\e[62D\e[62C\r\n\e[32m?\e[39m \e[1mPlease type in your skill name: \e[22m\e[0m \e[0m\e[2m(helloweb) \e[22m\e[46D\e[46C"
+  - delay: 1134
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mPlease type in your skill name: \e[22m\e[0m \e[0mh\e[36D\e[36C"
+  - delay: 123
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mPlease type in your skill name: \e[22m\e[0m \e[0mhe\e[37D\e[37C"
+  - delay: 281
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mPlease type in your skill name: \e[22m\e[0m \e[0mhe\e[37D\e[37C"
+  - delay: 202
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mPlease type in your skill name: \e[22m\e[0m \e[0mhel\e[38D\e[38C"
+  - delay: 135
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mPlease type in your skill name: \e[22m\e[0m \e[0mhell\e[39D\e[39C"
+  - delay: 213
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mPlease type in your skill name: \e[22m\e[0m \e[0mhello\e[40D\e[40C"
+  - delay: 282
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mPlease type in your skill name: \e[22m\e[0m \e[0mhello \e[41D\e[41C"
+  - delay: 272
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mPlease type in your skill name: \e[22m\e[0m \e[0mhello w\e[42D\e[42C"
+  - delay: 53
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mPlease type in your skill name: \e[22m\e[0m \e[0mhello we\e[43D\e[43C"
+  - delay: 191
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mPlease type in your skill name: \e[22m\e[0m \e[0mhello web\e[44D\e[44C"
+  - delay: 338
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mPlease type in your skill name: \e[22m\e[0m \e[0m\e[36mhello web\e[39m\e[44D\e[44C\r\n\e[32m?\e[39m \e[1mPlease type in your folder name for the skill project (alphanumeric): \e[22m\e[0m \e[0m\e[2m(helloweb) \e[22m\e[84D\e[84C"
+  - delay: 2271
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mPlease type in your folder name for the skill project (alphanumeric): \e[22m\e[0m \e[0mh\e[74D\e[74C"
+  - delay: 179
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mPlease type in your folder name for the skill project (alphanumeric): \e[22m\e[0m \e[0mhe\e[75D\e[75C"
+  - delay: 270
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mPlease type in your folder name for the skill project (alphanumeric): \e[22m\e[0m \e[0mhel\e[76D\e[76C"
+  - delay: 134
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mPlease type in your folder name for the skill project (alphanumeric): \e[22m\e[0m \e[0mhell\e[77D\e[77C"
+  - delay: 158
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mPlease type in your folder name for the skill project (alphanumeric): \e[22m\e[0m \e[0mhello\e[78D\e[78C"
+  - delay: 202
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mPlease type in your folder name for the skill project (alphanumeric): \e[22m\e[0m \e[0mhellow\e[79D\e[79C"
+  - delay: 67
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mPlease type in your folder name for the skill project (alphanumeric): \e[22m\e[0m \e[0mhellowe\e[80D\e[80C"
+  - delay: 78
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mPlease type in your folder name for the skill project (alphanumeric): \e[22m\e[0m \e[0mhelloweb\e[81D\e[81C"
+  - delay: 305
+    content: "\e[2K\e[G\e[32m?\e[39m \e[1mPlease type in your folder name for the skill project (alphanumeric): \e[22m\e[0m \e[0m\e[36mhelloweb\e[39m\e[81D\e[81C\r\n"
+  - delay: 4821
+    content: "Project for skill \"hello web\" is successfully created at /Volumes/LACIE/biggit/test/helloweb\r\n\r\n"
+  - delay: 15
+    content: "Project initialized with deploy delegate \"@ask-cli/cfn-deployer\" successfully.\r\n"
+  - delay: 1436
+    content: "\e[?25h"
+  - delay: 7
+    content: "\e[1m\e[7m%\e[27m\e[1m\e[0m                                                                                                    \r \r\e]7;file://Dzulkiflees-Mac-Pro.local/Volumes/LACIE/biggit/test\a\e]2;zoo@Dzulkiflees-Mac-Pro\a\e]1;..E/biggit/test\a"
+  - delay: 9
+    content: "\e]7;file://Dzulkiflees-Mac-Pro.local/Volumes/LACIE/biggit/test\a"
+  - delay: 65
+    content: "\r\e[0m\e[27m\e[24m\e[J\e[01;32m➜  \e[36mtest\e[00m \e[K\e[?1h\e=\e[?2004h"
+  - delay: 3000
+    content: "\e[?2004l\r\r\n"

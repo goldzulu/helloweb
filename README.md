@@ -26,14 +26,22 @@ The repo contains both the WEBApi portion and the Alexa Skill portion. Most of w
 ---
 ## Quick Start
 
-Clone this repository
+Use ask cli to initialise a new skill by using this template
 ```bash
-$ git clone --depth 1 https://github.com/goldzulu/helloweb.git alexa-webapi-game
+$ ask new --template-url https://github.com/goldzulu/helloweb --template-branch main
 ```
+* Select AWS with CloudFormation
+* Answer Yes to _Would you like to continue download the skill template?_
+* Here, you can name the skill and it's directory
 
-Go into the repository
+<p align="center"><img src="/readme/alexawebapisetup.gif?raw=true"/></p>
+
+> *IMPORTANT:* Just cloning using git clone does now work 
+> By using the `ask new` command, you will setup the template as intended.
+
+After that, go into the directory you have specified above
 ```bash
-$ cd alexa-webapi-game
+$ cd helloweb
 ```
 
 Initialise Alexa Skill
