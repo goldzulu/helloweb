@@ -2,6 +2,5 @@
 # CAUTION: Script is used for restoring the states of the skill from a local backup created by the scrip prepforgithub
 #          .ask/ask-states.json skill-package/skill.json will be replaced by .ask/ask-states-local and skill-package/skill-local.json
 mkdir .ask
-cp ./ask-states-local.json .ask/ask-states.json
+cp ask-states-local.json .ask/ask-states.json
 cp skill-package/skill-local.json skill-package/skill.json
-
