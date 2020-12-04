@@ -155,15 +155,7 @@ You can find me on Twitter https://twitter.com/VoiceTechGuy1 or on Twitch at htt
 
 ## Support Me
 
-The skills as many other contents that I've created are free to use. The best support you can give is by using it and giving feedback. If for some reason you wish to do more, you either become a patron <a href="https://www.patreon.com/bePatron?u=36519237" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script> or if you want to be anonymous and give me a suprise, you can donate using coinbase crypto 
-<div>
-  <a class="donate-with-crypto"
-     href="https://commerce.coinbase.com/checkout/c04bf6a1-baf1-4f51-a643-eb54068b4446">
-    Donate with Crypto
-  </a>
-  <script src="https://commerce.coinbase.com/v1/checkout.js?version=201807">
-  </script>
-</div>
+The skills as many other contents that I've created are free to use. The best support you can give is by using it and giving feedback. If for some reason you wish to do more, you either become a patron <a href="https://www.patreon.com/bePatron?u=36519237" data-patreon-widget-type="become-patron-button">Become a Patron!</a> or if you want to be anonymous and give me a suprise, you can donate using <a href="https://commerce.coinbase.com/checkout/c04bf6a1-baf1-4f51-a643-eb54068b4446">Coinbase Crypto</a>
 
 ## Credits
 
