@@ -37,7 +37,7 @@ export default class TextStyles {
         TextStyles.SIZE_MED2 = width / 25;
         TextStyles.SIZE_SMALL = width / 30;
         TextStyles.SIZE_SMALL2 = width / 40;
-        TextStyles.MAIN_FONT="Flamenco";
+        TextStyles.MAIN_FONT="Days One";
 
         this.styles = [];
         this.styles[TextStyles.DEFAULT] = {
@@ -179,7 +179,7 @@ export default class TextStyles {
         this.styles['BUTTON_STYLE'] = {
             style: {
                 fontFamily: TextStyles.MAIN_FONT,
-                fontSize: TextStyles.SIZE_MED,
+                fontSize: TextStyles.SIZE_SMALL,
                 color: "#ffffff",
             },
             shadow: "#000000"

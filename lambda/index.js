@@ -5,6 +5,7 @@ const WebAPI = require('./webapi');
 const LOG_INFO = "INFO";
 const LOG_ERROR = "ERROR";
 const LOG_WARNING = "WARNING";
+const LOG_WEBAPI = "WEBAPI";
 
 // CacheBuster - the index file on cloudfront/s3 will be at /dist/vX/index.html  where X is the version number below
 // You would need to make sure when copying to S3 the /dist directory is copied to /dist/vX on S3
@@ -16,10 +17,10 @@ const webAppBaseURL = `https://${process.env.Domain}`;
 
 // This is a convenient variable that you can set to an S3 bucket or elsewhere for instance when cloudfront takes a few min to propagate
 // Set to '' if not in use. If set it will override the above. Leave it as it is if you don't know what I am talking about!
-//const webAppS3URL = 'https://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog.s3.amazonaws.com/dist/index.html'
 const webAppS3URL = ''
-//const webAppLocalURL = 'https://325e96a04085.ngrok.io/'
-const webAppLocalURL = ''
+//const webAppS3URL = 'https://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog.s3.amazonaws.com/dist/index.html'
+//const webAppLocalURL = ''
+const webAppLocalURL = 'https://b160301b3f04.ngrok.io'
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
@@ -27,26 +28,26 @@ const LaunchRequestHandler = {
     },
     handle(handlerInput) {
         let speakOutput = "";
-        let reprompt = "";
+        //let reprompt = "";
 
         // Check that the device supports Web API
-        const supportedInterfaces = Alexa.getSupportedInterfaces(handlerInput.requestEnvelope);
-        const htmlInterface = supportedInterfaces['Alexa.Presentation.HTML'];
-        if(htmlInterface !== null && htmlInterface !== undefined) {
+        if(supportsHTMLInterface(handlerInput)) {
             // Device is capable of utilizing WebAPI
-            speakOutput = 'Welcome to the Alexa Web A P I Phaser 3 boilerplate. Ask me to say something';
-            reprompt = 'Which would you like to try?';
+            speakOutput = 'Welcome to the Alexa Web A P I Phaser 3 boilerplate.';
+            //reprompt = 'Which would you like to try?';
 
-            speakOutput += reprompt;
+            //speakOutput += reprompt;
             conditionallyLaunchWebApp(handlerInput);
             handlerInput.responseBuilder.speak(speakOutput);
 
+            // Possibly future use where FireTV is handled differently
+            // As it uses push to talk and there is no need to respond immediately
             if(isHTMLCapableFireTV(handlerInput)) {
                 return handlerInput.responseBuilder.getResponse();
             }
 
             return handlerInput.responseBuilder
-                .reprompt(speakOutput)
+                //.reprompt(speakOutput) // removing the need to prompt to speed up WebAPI Loading
                 .getResponse();
         }
         else
@@ -69,39 +70,41 @@ const conditionallyLaunchWebApp = (handlerInput) => {
 
         if (webAppLocalURL) 
         {
-            indexPath = 'index.html' 
+            indexPath = '/index.html' 
         } 
         else  
         { 
             indexPath = `/dist/v${VERSION}/index.html`
         }
 
-        handlerInput.responseBuilder.addDirective({
-            type:"Alexa.Presentation.HTML.Start",
-            data: createStateFromSessionAttr(handlerInput.attributesManager.getSessionAttributes()),
-            request: {
-                uri: (webAppLocalURL || webAppS3URL || webAppBaseURL ) + indexPath,
-                method: "GET"
-            },
-            configuration: {
-               "timeoutInSeconds": 300
-            }});
+
+        let data = createStateFromSessionAttr(handlerInput.attributesManager.getSessionAttributes())
+        let url = (webAppLocalURL || webAppS3URL || webAppBaseURL ) + indexPath
+        let payload = {data,url}
+
+        handlerInput.responseBuilder.addDirective(WebAPI.sendWebAPIMessage({type:WebAPI.MSGTYPE_START,payload}))
     }
 }
 
 const supportsHTMLInterface = (handlerInput) => {
     const supportedInterfaces = Alexa.getSupportedInterfaces(handlerInput.requestEnvelope);
     const htmlInterface = supportedInterfaces['Alexa.Presentation.HTML'];
-    console.log(supportedInterfaces);
+    dlog(LOG_INFO, supportedInterfaces);
     
     return htmlInterface !== null && htmlInterface !== undefined;
 }
+
 
 const dlog = (type, message) => {
     console.log(type + " : " + message);
 }
 
-//takes in everything in the current sessions and pass it to the WebAPI portion
+/**
+ * Takes everying in the current sessions and pass it to the WEBApi portion
+ *
+ * @param {*} sessionAttrs
+ * @returns
+ */
 const createStateFromSessionAttr = (sessionAttrs) => {
     let dataPayload = sessionAttrs;
     return dataPayload;
@@ -156,8 +159,95 @@ const SaySomethingIntentHandler = {
       const speakOutput = "<speak>I was asked to say something</speak>";
   
       if (supportsHTMLInterface(handlerInput)) {
+        dlog(LOG_INFO,'Inside Saysomething')
+        dlog(LOG_INFO,JSON.stringify(WebAPI.sendWebAPIMessage({type:"speak", payload:"And I have spoken"}),null,4))
         return handlerInput.responseBuilder
           .addDirective(WebAPI.sendWebAPIMessage({type:"speak", payload:"And I have spoken"}))
+          .speak(speakOutput)
+          .getResponse();
+      } else {
+        dlog(LOG_INFO,'SupportsHTML is false')
+        return handlerInput.responseBuilder.speak(speakOutput).getResponse();
+      }
+    },
+  };
+
+  const BeginGameIntentHandler = {
+    canHandle(handlerInput) {
+      return (
+        Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" &&
+        Alexa.getIntentName(handlerInput.requestEnvelope) === "BeginGameIntent"
+      );
+    },
+    handle(handlerInput) {
+      const speakOutput = "<speak>Starting the game</speak>";
+  
+      if (supportsHTMLInterface(handlerInput)) {
+        return handlerInput.responseBuilder
+          .addDirective(WebAPI.sendWebAPIMessage({type:"command", payload:"not applicable", cmd:"begingame"}))
+          .speak(speakOutput)
+          .getResponse();
+      } else {
+        return handlerInput.responseBuilder.speak(speakOutput).getResponse();
+      }
+    },
+  };
+
+  const EndGameIntentHandler = {
+    canHandle(handlerInput) {
+      return (
+        Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" &&
+        Alexa.getIntentName(handlerInput.requestEnvelope) === "EndGameIntent"
+      );
+    },
+    handle(handlerInput) {
+      const speakOutput = "<speak>Ending the game</speak>";
+  
+      if (supportsHTMLInterface(handlerInput)) {
+        return handlerInput.responseBuilder
+          .addDirective(WebAPI.sendWebAPIMessage({type:"command", payload:"not applicable", cmd:"endgame"}))
+          .speak(speakOutput)
+          .getResponse();
+      } else {
+        return handlerInput.responseBuilder.speak(speakOutput).getResponse();
+      }
+    },
+  };
+
+  const PlayAgainIntentHandler = {
+    canHandle(handlerInput) {
+      return (
+        Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" &&
+        Alexa.getIntentName(handlerInput.requestEnvelope) === "PlayAgainIntent"
+      );
+    },
+    handle(handlerInput) {
+      const speakOutput = "<speak>Beginning a new game</speak>";
+  
+      if (supportsHTMLInterface(handlerInput)) {
+        return handlerInput.responseBuilder
+          .addDirective(WebAPI.sendWebAPIMessage({type:"command", payload:"not applicable", cmd:"playagain"}))
+          .speak(speakOutput)
+          .getResponse();
+      } else {
+        return handlerInput.responseBuilder.speak(speakOutput).getResponse();
+      }
+    },
+  };
+
+  const TitleScreenIntentHandler = {
+    canHandle(handlerInput) {
+      return (
+        Alexa.getRequestType(handlerInput.requestEnvelope) === "IntentRequest" &&
+        Alexa.getIntentName(handlerInput.requestEnvelope) === "TitleScreenIntent"
+      );
+    },
+    handle(handlerInput) {
+      const speakOutput = "<speak>Going back to the title screen</speak>";
+  
+      if (supportsHTMLInterface(handlerInput)) {
+        return handlerInput.responseBuilder
+          .addDirective(WebAPI.sendWebAPIMessage({type:"command", payload:"not applicable", cmd:"titlescreen"}))
           .speak(speakOutput)
           .getResponse();
       } else {
@@ -235,6 +325,11 @@ exports.handler = Alexa.SkillBuilders.custom()
         HelloWorldIntentHandler,
         HelpIntentHandler,
         SaySomethingIntentHandler,
+        BeginGameIntentHandler,
+        EndGameIntentHandler,
+        PlayAgainIntentHandler,
+        TitleScreenIntentHandler,
+        WebAPI.WebMessageHandler,
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler,
         IntentReflectorHandler, // make sure IntentReflectorHandler is last so it doesn't override your custom intent handlers

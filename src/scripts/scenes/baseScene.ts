@@ -57,7 +57,7 @@ export default class BaseScene extends Phaser.Scene {
     //
     this.emitter = EventDispatcher.getInstance()
 
-    //Register all the events to listen to
+    //Register all the alexa related events to listen to
     this.emitter.on(ALEXA_CONST.ONMESSAGE, this.onAlexaMessage.bind(this))
 
     //
@@ -68,8 +68,47 @@ export default class BaseScene extends Phaser.Scene {
     this.gh = this.sys.game.config.height
   }
 
+  // Alexa related events
   protected onAlexaMessage(message): void {}
-
+  protected sendMessageToAlexa({ type, payload, cmd = '' }): void {
+    if (this.alexa) {
+    if (type == "speak") {
+      // @ts-ignore
+      this.alexa.skill.sendMessage({
+        type: "speak",
+        payload
+      });
+    }
+    if (type == "command") {
+      // @ts-ignore
+      this.alexa.skill.sendMessage({
+        type: "speak",
+        payload,
+        cmd
+      });
+    }
+    if (type == "ask") {
+      // @ts-ignore
+      this.alexa.skill.sendMessage({
+        type: "ask",
+        payload
+      });
+    }
+    if (type == "info") {
+      // @ts-ignore
+      this.alexa.skill.sendMessage({
+        type: "info",
+        payload
+      });
+    }
+    // if command not recognized
+    console.log(`WARNING: Type ${type} with payload ` + JSON.stringify(payload, null, 4) + `not recognized\n`)
+  }
+  else
+  {
+    console.log(`Alexa is not defined Message type ${type} with payload ${payload} and command "${cmd}" not sent`) 
+  }
+  }
   //
   //set a background image
   //

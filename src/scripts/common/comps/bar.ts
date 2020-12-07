@@ -12,7 +12,7 @@ export default class Bar extends Phaser.GameObjects.Container {
         //make a class reference to the scene
         this.scene = config.scene;
         if (!config.color) {
-            config.color = 0xff0000;
+            config.color = 0xffff00;
         }
         if (!config.width) {
             config.width = 200;

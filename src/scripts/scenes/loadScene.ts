@@ -10,10 +10,11 @@ export default class LoadScene extends BaseScene {
   private common: string
   private imagePath: string
   private audioPath: string
+  private videoPath: string
 
   bar: Bar
   bar2: Bar
-
+  
   constructor() {
     super('LoadScene')
   }
@@ -21,6 +22,8 @@ export default class LoadScene extends BaseScene {
     this.common = './assets/'
     this.imagePath = this.common + 'images/'
     this.audioPath = this.common + 'audio/'
+    this.videoPath = this.common + 'video/'
+
     /**
      *
      * make the loading bars
@@ -28,20 +31,22 @@ export default class LoadScene extends BaseScene {
      */
     this.bar2 = new Bar({
       scene: this,
-      height: this.sys.game.config.height as number * 0.1,
-      width: this.sys.game.config.width as number * 0.8,
+      height: this.sys.game.config.height as number * 0.025,
+      width: this.sys.game.config.width as number * 0.5,
       color: 0xffffff,
     })
     this.bar = new Bar({
       scene: this,
-      height: this.sys.game.config.height as number * 0.1,
-      width: this.sys.game.config.width as number * 0.8,
+      height: this.sys.game.config.height as number * 0.025,
+      width: this.sys.game.config.width as number * 0.5,
+      color: 0x000000,
     })
     Align.center(this.bar, this)
     Align.center(this.bar2, this)
+
     /*
          set up the progress
-       */
+    */
     this.load.on('progress', this.onProgress, this)
     /**
      *
@@ -55,10 +60,11 @@ export default class LoadScene extends BaseScene {
     //
     //game png
     //
-    let pngArray = ['panelBack', 'title', 'face']
+    let pngArray = ['panelBack', 'title', 'face','loadingscreen']
     for (let i = 0; i < pngArray.length; i++) {
       this.loadPng(pngArray[i], this.imagePath)
     }
+
     //
     //game jpg
     //
@@ -90,18 +96,25 @@ export default class LoadScene extends BaseScene {
     //
     //
     //
-    let cmp3Array = []
+    let cmp3Array = ['bensound-theelevatorbossanova']
     for (let i = 0; i < cmp3Array.length; i++) {
       this.loadMp3(cmp3Array[i])
     }
-    //        //
+
+    //load video
+
+    let mp4Array = ['intro']
+    for (let i = 0; i < mp4Array.length; i++) {
+      this.loadMp4(mp4Array[i])
+    }
 
     //
     //load toggles and buttons
     //
-    this.loadToggle(1)
-    this.loadToggle(2)
-    this.loadButton('button', 1, 2)
+    // this.loadToggle(1)
+    // this.loadToggle(2)
+    this.loadButton('default_button', 2, 4)
+    this.loadButton('transparent_button', 1, 0)
 
     //
     //load effects
@@ -117,6 +130,13 @@ export default class LoadScene extends BaseScene {
     let per = Math.floor(value * 100)
     this.bar.setPercent(value)
   }
+
+  init() {
+    this.makeAlignGrid(11,11)
+    this.aGrid.showNumbers()
+    this.placeImage('loadingscreen',60,1)
+  }
+  
   create() {
     this.scene.start('TitleScene')
   }
@@ -153,5 +173,15 @@ export default class LoadScene extends BaseScene {
     }
     this.load.audio(key, mainPath + key + '.mp3')
   }
+
+  loadMp4(key, mainPath = '') {
+    if (mainPath == '') {
+      mainPath = this.videoPath
+    }
+    this.load.video(key, mainPath + key + '.mp4')
+   // this.load.video('intro', 'assets/video/intro.mp4', 'loadedData', false, true)
+  }
+
+  
   update() {}
 }

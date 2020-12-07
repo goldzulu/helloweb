@@ -39,21 +39,13 @@ export default class OverScene extends BaseScene {
     // Helper grid system as per https://www.youtube.com/watch?v=ZWIZeGAXuSA
     // Can be turned on
     // this.aGrid = new AlignGrid({ game: this.game, scene: this, rows: 11, cols: 11 })
-    this.setBackground('sky')
+    this.setBackground('loadingscreen')
     this.makeAlignGrid(11, 11)
 
     this.aGrid.showNumbers()
 
-    this.placeText('Game Title', 27, 'TITLE_TEXT')
-
-    // // play the intro start video
-    // this.video = this.add.video(0, 0, 'intro')
-    // // 60 is the center of an 11x11 grid
-    // this.aGrid.placeAtIndex(60, this.video)
-    // Align.scaleToGameW(this.video, 1, this)
-    // this.video.play(true)
-
-    // new PhaserLogo(this, this.cameras.main.width / 2, 0)
+    this.placeText('Game Over', 71, 'TITLE_TEXT')
+    
     //TODO: Change the fpsText to conform to the structure of this start
     this.fpsText = new FpsText(this)
 
@@ -61,12 +53,14 @@ export default class OverScene extends BaseScene {
     let btnNext = new FlatButton({
       scene: this,
       textStyle: 'BUTTON_STYLE',
-      key: 'button',
-      text: 'PLAY AGAIN',
+      key: 'default_button',
+      text: 'PLAY AGAIN?',
       callback: this.playAgain.bind(this),
       scale: 0.3,
     })
     this.aGrid.placeAtIndex(104, btnNext)
+
+    this.sendMessageToAlexa({type:'ask',payload:'Game over. Say play again to have another game, or say title screen to go back to the main title'})
   }
 
   onAlexaMessage(message): void {
@@ -77,6 +71,16 @@ export default class OverScene extends BaseScene {
         fontSize: 24,
       })
       .setOrigin(1, 0)
+
+    if (message.type == "command") {
+        if (message.cmd == "playagain") {
+          this.playAgain()
+        }
+        if (message.cmd == "titlescreen") {
+          this.titleScreen()
+        }
+      }
+  
   }
 
   update() {
@@ -86,4 +90,9 @@ export default class OverScene extends BaseScene {
   playAgain() {
     this.scene.start('MainScene')
   }
+
+  titleScreen() {
+    this.scene.start("TitleScreen");
+  }
+
 }

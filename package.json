@@ -6,6 +6,8 @@
   "main": "index.js",
   "scripts": {
     "deploy:skill": "ask deploy",
+    "deploy:skill:infra": "ask deploy --target skill-infrastructure",
+    "deploy:skill:meta": "ask deploy --target skill-metadata",
     "start": "webpack-dev-server --config webpack/webpack.dev.js",
     "build": "webpack --config webpack/webpack.prod.js",
     "bundle": "npm run build",

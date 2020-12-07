@@ -36,6 +36,51 @@
                     "name": "SaySomethingIntent",
                     "slots": [],
                     "samples": ["say something"]
+                },
+                {
+                    "name": "BeginGameIntent",
+                    "slots": [],
+                    "samples": [
+                        "begin game",
+                        "start game",
+                        "let's start the game",
+                        "can we start now",
+                        "begin"
+                    ]
+                },
+                {
+                    "name": "EndGameIntent",
+                    "slots": [],
+                    "samples": [
+                        "end game",
+                        "end the game",
+                        "i give up",
+                        "i am finished",
+                        "i had enough"
+                    ]
+                },
+                {
+                    "name": "PlayAgainIntent",
+                    "slots": [],
+                    "samples": [
+                        "play again",
+                        "restart game",
+                        "i want to play again",
+                        "yes play again",
+                        "play again please"
+                    ]
+                },
+                {
+                    "name": "TitleScreenIntent",
+                    "slots": [],
+                    "samples": [
+                        "go back to title screen",
+                        "title screen",
+                        "bring up the title screen",
+                        "bring me back to title screen",
+                        "show me the title screen",
+                        "show the title screen"
+                    ]
                 }
             ],
             "types": []
