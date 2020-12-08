@@ -8,7 +8,7 @@
           "deployState": {
             "default": {
               "s3": {
-                "bucket": "ask-helloweb-askclidef-useast1-1606574701869",
+                "bucket": "ask-helloweb-askclidef-useast1-1607461878850",
                 "key": "endpoint/build.zip"
               },
               "stackId": "arn:aws:cloudformation:us-east-1:722383165419:stack/ask-helloweb-default-skillStack-1604966366893/a1963e60-22e7-11eb-a5f5-0a7c595099af",
@@ -39,11 +39,11 @@
         }
       },
       "skillMetadata": {
-        "lastDeployHash": "H7gFzqPY4Ibdj0AK4utpPWRJBHQ="
+        "lastDeployHash": "/U+nieETrKU89t/UqJP3yFbw7uc="
       },
       "code": {
         "default": {
-          "lastDeployHash": "VV60QAHFD/B52sHhwoaNaRgOBWA="
+          "lastDeployHash": "gVpFfU1p9pIjVByhIrESQ82ixBE="
         }
       }
     }
