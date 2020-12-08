@@ -12,10 +12,7 @@ import Controller from '../common/mc/controller'
 import MediaManager from '../common/util/mediaManager'
 
 import AlexaClient from '../alexa/AlexaClient'
-import * as ALEXA_CONST from '../constants/alexa_const'
-
-// says the the variable alexa exists
-//declare var Alexa: any;
+import ALEXA_CONST from '../constants/alexa_const'
 
 export default abstract class BaseScene extends Phaser.Scene {
   alexa: AlexaClient
@@ -38,7 +35,6 @@ export default abstract class BaseScene extends Phaser.Scene {
   preload() {}
 
   create() {
-
     //
     //make the media manager
     this.mm = MediaManager.getInstance({
@@ -46,15 +42,12 @@ export default abstract class BaseScene extends Phaser.Scene {
     })
     //
     //create the controller to listen to events
-    //
     // WARNING, Media Manager must be initialised first
     this.controller = Controller.getInstance()
     //
     //set up model to hold global values
     //
     this.model = Model.getInstance()
-    
-
 
     //
     //set up the text styles object
@@ -62,50 +55,68 @@ export default abstract class BaseScene extends Phaser.Scene {
     this.textStyles = TextStyles.getInstance(this.sys.game.config.width)
     this.gw = this.sys.game.config.width
     this.gh = this.sys.game.config.height
-
   }
 
-  // Alexa related events
-  abstract onAlexaMessage(message): void;
+  // Alexa related methods
+  /**
+   * Process any inbound message from the Alexa Skill
+   *
+   * @abstract
+   * @param {*} message
+   * @memberof BaseScene
+   */
+  abstract onAlexaMessage(message): void
+
+  /**
+   * Sends a message back to the Alexa Skill
+   *
+   * @protected
+   * @param {*} { type, payload, cmd = '' }
+   * @memberof BaseScene
+   */
   protected sendMessageToAlexa({ type, payload, cmd = '' }): void {
-    if (this.alexa) {
-    if (type == "speak") {
-      // @ts-ignore
-      this.alexa.skill.sendMessage({
-        type: "speak",
-        payload
-      });
+    if (AlexaClient.getInstance()) {
+      /** Ask alexa to speak but not wait for response */
+      if (type == 'speak') {
+        // @ts-ignore
+        AlexaClient.getInstance().skill.sendMessage({
+          type: 'speak',
+          payload,
+        })
+      }
+      /** Sends a command back to the Alexa Skill */
+      if (type == 'command') {
+        // @ts-ignore
+        AlexaClient.getInstance().skill.sendMessage({
+          type: 'speak',
+          payload,
+          cmd,
+        })
+      }
+      /** Ask the Alexa Skill to prompt for a response */
+      if (type == 'ask') {
+        // @ts-ignore
+        AlexaClient.getInstance().skill.sendMessage({
+          type: 'ask',
+          payload,
+        })
+      }
+      /** Sends back information back to the Alexa Skill to be spoken as an FYI */
+      if (type == 'info') {
+        // @ts-ignore
+        AlexaClient.getInstance().skill.sendMessage({
+          type: 'info',
+          payload,
+        })
+      }
+      // if command not recognized
+      console.log(`WARNING: Type ${type} with payload ` + JSON.stringify(payload, null, 4) + `not recognized\n`)
+    } else {
+      // Alexa object is not available. Most probably this is running on localhost
+      console.log(`Alexa is not defined Message type ${type} with payload ${payload} and command "${cmd}" not sent`)
     }
-    if (type == "command") {
-      // @ts-ignore
-      this.alexa.skill.sendMessage({
-        type: "speak",
-        payload,
-        cmd
-      });
-    }
-    if (type == "ask") {
-      // @ts-ignore
-      this.alexa.skill.sendMessage({
-        type: "ask",
-        payload
-      });
-    }
-    if (type == "info") {
-      // @ts-ignore
-      this.alexa.skill.sendMessage({
-        type: "info",
-        payload
-      });
-    }
-    // if command not recognized
-    console.log(`WARNING: Type ${type} with payload ` + JSON.stringify(payload, null, 4) + `not recognized\n`)
   }
-  else
-  {
-    console.log(`Alexa is not defined Message type ${type} with payload ${payload} and command "${cmd}" not sent`) 
-  }
-  }
+
   //
   //set a background image
   //

@@ -17,11 +17,11 @@ const webAppBaseURL = `https://${process.env.Domain}`;
 
 // This is a convenient variable that you can set to an S3 bucket or elsewhere for instance when cloudfront takes a few min to propagate
 // Set to '' if not in use. If set it will override the above. Leave it as it is if you don't know what I am talking about!
-const webAppS3URL = ''
-//const webAppS3URL = 'https://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog.s3.amazonaws.com/dist/index.html'
-//const webAppLocalURL = ''
+//const webAppS3URL = ''
+const webAppS3URL = 'https://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog.s3.amazonaws.com'
+const webAppLocalURL = ''
 // note: no trailing slash after the domain name
-const webAppLocalURL = 'https://4264951dd150.ngrok.io'
+//const webAppLocalURL = 'https://4264951dd150.ngrok.io'
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
@@ -34,7 +34,7 @@ const LaunchRequestHandler = {
         // Check that the device supports Web API
         if(supportsHTMLInterface(handlerInput)) {
             // Device is capable of utilizing WebAPI
-            speakOutput = 'Welcome to the Alexa Web A P I Phaser 3 boilerplate.';
+            speakOutput = 'Welcome to the Alexa Web A P I Phaser 3 boilerplate. One moment please';
             //reprompt = 'Which would you like to try?';
 
             //speakOutput += reprompt;

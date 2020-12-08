@@ -8,7 +8,7 @@ import EventDispatcher from '../common/mc/eventDispatcher'
 import BaseScene from './baseScene'
 import FlatButton from '../common/ui/flatButton'
 
-import * as ALEXA_CONST from '../constants/alexa_const'
+import ALEXA_CONST from '../constants/alexa_const'
 
 // says the the variable alexa exists
 //declare var Alexa: any;
@@ -37,13 +37,7 @@ export default class OverScene extends BaseScene {
     this.emitter = EventDispatcher.getInstance()
 
     //Register all the alexa related events to listen to
-    this.emitter.on(ALEXA_CONST.ONMESSAGE, this.onAlexaMessage,this)
-    
-    //this.alexa = await AlexaClient.getInstance();
-    //play the audio
-
-    // const titleMusic = this.sound.add('intromusic')
-    // titleMusic.play({ loop: true })
+    this.emitter.on(ALEXA_CONST.ONMESSAGE, this.onAlexaMessage, this)
 
     // Helper grid system as per https://www.youtube.com/watch?v=ZWIZeGAXuSA
     // Can be turned on
@@ -51,10 +45,10 @@ export default class OverScene extends BaseScene {
     this.setBackground('loadingscreen')
     this.makeAlignGrid(11, 11)
 
-    this.aGrid.showNumbers()
+    //this.aGrid.showNumbers()
 
     this.placeText('Game Over', 71, 'TITLE_TEXT')
-    
+
     //TODO: Change the fpsText to conform to the structure of this start
     this.fpsText = new FpsText(this)
 
@@ -69,7 +63,11 @@ export default class OverScene extends BaseScene {
     })
     this.aGrid.placeAtIndex(104, btnNext)
 
-    this.sendMessageToAlexa({type:'ask',payload:'Game over. Say play again to have another game, or say title screen to go back to the main title'})
+    this.sendMessageToAlexa({
+      type: 'ask',
+      payload:
+        'Game over. Say play again to have another game, title screen to go back to the main title or say exit to end the game',
+    })
   }
 
   onAlexaMessage(message): void {
@@ -81,15 +79,14 @@ export default class OverScene extends BaseScene {
       })
       .setOrigin(1, 0)
 
-    if (message.type == "command") {
-        if (message.cmd == "playagain") {
-          this.playAgain()
-        }
-        if (message.cmd == "titlescreen") {
-          this.titleScreen()
-        }
+    if (message.type == 'command') {
+      if (message.cmd == 'playagain') {
+        this.playAgain()
       }
-  
+      if (message.cmd == 'titlescreen') {
+        this.titleScreen()
+      }
+    }
   }
 
   update() {
@@ -97,15 +94,12 @@ export default class OverScene extends BaseScene {
   }
 
   playAgain() {
-    this.emitter.off(ALEXA_CONST.ONMESSAGE, this.onAlexaMessage,this)
+    this.emitter.off(ALEXA_CONST.ONMESSAGE, this.onAlexaMessage, this)
     this.scene.start('MainScene')
   }
 
   titleScreen() {
-    this.emitter.off(ALEXA_CONST.ONMESSAGE, this.onAlexaMessage,this)
-    this.scene.start("TitleScene");
+    this.emitter.off(ALEXA_CONST.ONMESSAGE, this.onAlexaMessage, this)
+    this.scene.start('TitleScene')
   }
-
-  
-
 }

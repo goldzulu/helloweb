@@ -37,11 +37,14 @@ export default class MediaManager {
     }
     setBackgroundMusic(key) {
         if (MediaManager.instance.model.musicOn == true) {
-            MediaManager.instance.background = this.scene.sound.add(key, {
-                volume: .5,
-                loop: true
-            });
-            MediaManager.instance.background.play();
+            // cross check that the sound is not already playing
+            if (this.scene.sound.get(key) == null) {
+              MediaManager.instance.background = this.scene.sound.add(key, {
+                    volume: .5,
+                    loop: true
+                });
+              MediaManager.instance.background.play();
+            }
         }
     }
 }

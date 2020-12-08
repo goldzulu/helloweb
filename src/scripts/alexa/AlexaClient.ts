@@ -1,7 +1,7 @@
 // Alexa Singleton Class
 
 import EventDispatcher from '../common/mc/eventDispatcher'
-import * as ALEXA_CONST from '../constants/alexa_const'
+import ALEXA_CONST from '../constants/alexa_const'
 
 // needed to import the externally declared Alexa client object
 declare var Alexa: any

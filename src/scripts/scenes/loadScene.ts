@@ -14,7 +14,7 @@ export default class LoadScene extends BaseScene {
 
   bar: Bar
   bar2: Bar
-  
+
   constructor() {
     super('LoadScene')
   }
@@ -24,9 +24,12 @@ export default class LoadScene extends BaseScene {
     this.audioPath = this.common + 'audio/'
     this.videoPath = this.common + 'video/'
 
-    this.makeAlignGrid(11,11)
-    this.aGrid.showNumbers()
-    this.placeImage('loadingscreen',60,1)
+    // Say that we are loading
+    this.sendMessageToAlexa({ type: 'speak', payload: 'Loading' })
+
+    this.makeAlignGrid(11, 11)
+    //this.aGrid.showNumbers()
+    this.placeImage('loadingscreen', 60, 1)
 
     /**
      *
@@ -35,20 +38,18 @@ export default class LoadScene extends BaseScene {
      */
     this.bar2 = new Bar({
       scene: this,
-      height: this.sys.game.config.height as number * 0.025,
-      width: this.sys.game.config.width as number * 0.5,
+      height: (this.sys.game.config.height as number) * 0.025,
+      width: (this.sys.game.config.width as number) * 0.5,
       color: 0xffffff,
     })
     this.bar = new Bar({
       scene: this,
-      height: this.sys.game.config.height as number * 0.025,
-      width: this.sys.game.config.width as number * 0.5,
+      height: (this.sys.game.config.height as number) * 0.025,
+      width: (this.sys.game.config.width as number) * 0.5,
       color: 0x000000,
     })
     Align.center(this.bar, this)
     Align.center(this.bar2, this)
-
-
 
     /*
          set up the progress
@@ -66,7 +67,7 @@ export default class LoadScene extends BaseScene {
     //
     //game png
     //
-    let pngArray = ['panelBack', 'title', 'face','loadingscreen']
+    let pngArray = ['panelBack', 'title', 'face', 'loadingscreen']
     for (let i = 0; i < pngArray.length; i++) {
       this.loadPng(pngArray[i], this.imagePath)
     }
@@ -109,7 +110,7 @@ export default class LoadScene extends BaseScene {
 
     //load video
 
-    let mp4Array = []
+    let mp4Array = ['intro']
     for (let i = 0; i < mp4Array.length; i++) {
       this.loadMp4(mp4Array[i])
     }
@@ -138,9 +139,9 @@ export default class LoadScene extends BaseScene {
   }
 
   //init() {}
-  
+
   create() {
-    super.create();
+    super.create()
     this.scene.start('TitleScene')
   }
   loadButton(key, style, number) {
@@ -182,10 +183,10 @@ export default class LoadScene extends BaseScene {
       mainPath = this.videoPath
     }
     this.load.video(key, mainPath + key + '.mp4')
-   // this.load.video('intro', 'assets/video/intro.mp4', 'loadedData', false, true)
+    // this.load.video('intro', 'assets/video/intro.mp4', 'loadedData', false, true)
   }
 
   onAlexaMessage(message): void {}
-  
+
   update() {}
 }

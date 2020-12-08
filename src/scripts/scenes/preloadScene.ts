@@ -7,14 +7,13 @@ import BaseScene from './baseScene'
  * @extends {BaseScene}
  */
 export default class PreloadScene extends BaseScene {
-  
   constructor() {
     super({ key: 'PreloadScene' })
   }
   preload() {
     let common = './assets/'
     let imagePath = common + 'images/'
-    
+
     // The key for the loadingscreen image
     let key = 'loadingscreen'
 
@@ -22,12 +21,10 @@ export default class PreloadScene extends BaseScene {
   }
 
   create() {
-
     //this.sendMessageToAlexa({type:'speak',payload:'Loading'})
     this.scene.start('LoadScene')
   }
-  
-  onAlexaMessage(message): void {}
 
+  onAlexaMessage(message): void {}
   update() {}
 }
