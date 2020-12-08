@@ -103,7 +103,7 @@ export default class OverScene extends BaseScene {
 
   titleScreen() {
     this.emitter.off(ALEXA_CONST.ONMESSAGE, this.onAlexaMessage,this)
-    this.scene.start("TitleScreen");
+    this.scene.start("TitleScene");
   }
 
   

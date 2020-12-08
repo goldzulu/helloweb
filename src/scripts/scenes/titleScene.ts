@@ -83,6 +83,10 @@ export default class TitleScene extends BaseScene {
     
     this.aGrid.placeAtIndex(103, btnNext);
 
+    //@ts-ignore
+    AlexaClient.getInstance().skill.sendMessage({
+      type: "speak",
+      payload: "Say Begin to start the game"});
     //this.sendMessageToAlexa({type:'ask',payload:'When ready, say begin to start the game'})
 
   }
