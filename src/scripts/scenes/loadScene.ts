@@ -24,6 +24,10 @@ export default class LoadScene extends BaseScene {
     this.audioPath = this.common + 'audio/'
     this.videoPath = this.common + 'video/'
 
+    this.makeAlignGrid(11,11)
+    this.aGrid.showNumbers()
+    this.placeImage('loadingscreen',60,1)
+
     /**
      *
      * make the loading bars
@@ -43,6 +47,8 @@ export default class LoadScene extends BaseScene {
     })
     Align.center(this.bar, this)
     Align.center(this.bar2, this)
+
+
 
     /*
          set up the progress
@@ -103,7 +109,7 @@ export default class LoadScene extends BaseScene {
 
     //load video
 
-    let mp4Array = ['intro']
+    let mp4Array = []
     for (let i = 0; i < mp4Array.length; i++) {
       this.loadMp4(mp4Array[i])
     }
@@ -131,13 +137,10 @@ export default class LoadScene extends BaseScene {
     this.bar.setPercent(value)
   }
 
-  init() {
-    this.makeAlignGrid(11,11)
-    this.aGrid.showNumbers()
-    this.placeImage('loadingscreen',60,1)
-  }
+  //init() {}
   
   create() {
+    super.create();
     this.scene.start('TitleScene')
   }
   loadButton(key, style, number) {
@@ -182,6 +185,7 @@ export default class LoadScene extends BaseScene {
    // this.load.video('intro', 'assets/video/intro.mp4', 'loadedData', false, true)
   }
 
+  onAlexaMessage(message): void {}
   
   update() {}
 }

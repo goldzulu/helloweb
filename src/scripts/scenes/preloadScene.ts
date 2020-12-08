@@ -23,9 +23,11 @@ export default class PreloadScene extends BaseScene {
 
   create() {
 
-    this.sendMessageToAlexa({type:'speak',payload:'Loading'})
+    //this.sendMessageToAlexa({type:'speak',payload:'Loading'})
     this.scene.start('LoadScene')
   }
   
+  onAlexaMessage(message): void {}
+
   update() {}
 }

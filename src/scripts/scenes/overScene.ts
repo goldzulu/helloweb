@@ -30,6 +30,15 @@ export default class OverScene extends BaseScene {
 
   create() {
     super.create()
+
+    //
+    //set up the event dispatcher
+    //
+    this.emitter = EventDispatcher.getInstance()
+
+    //Register all the alexa related events to listen to
+    this.emitter.on(ALEXA_CONST.ONMESSAGE, this.onAlexaMessage,this)
+    
     //this.alexa = await AlexaClient.getInstance();
     //play the audio
 
@@ -88,11 +97,15 @@ export default class OverScene extends BaseScene {
   }
 
   playAgain() {
+    this.emitter.off(ALEXA_CONST.ONMESSAGE, this.onAlexaMessage,this)
     this.scene.start('MainScene')
   }
 
   titleScreen() {
+    this.emitter.off(ALEXA_CONST.ONMESSAGE, this.onAlexaMessage,this)
     this.scene.start("TitleScreen");
   }
+
+  
 
 }

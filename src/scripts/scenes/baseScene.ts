@@ -17,7 +17,7 @@ import * as ALEXA_CONST from '../constants/alexa_const'
 // says the the variable alexa exists
 //declare var Alexa: any;
 
-export default class BaseScene extends Phaser.Scene {
+export default abstract class BaseScene extends Phaser.Scene {
   alexa: AlexaClient
   emitter: Phaser.Events.EventEmitter
   gw: integer | string
@@ -38,6 +38,7 @@ export default class BaseScene extends Phaser.Scene {
   preload() {}
 
   create() {
+
     //
     //make the media manager
     this.mm = MediaManager.getInstance({
@@ -52,13 +53,8 @@ export default class BaseScene extends Phaser.Scene {
     //set up model to hold global values
     //
     this.model = Model.getInstance()
-    //
-    //set up the event dispatcher
-    //
-    this.emitter = EventDispatcher.getInstance()
+    
 
-    //Register all the alexa related events to listen to
-    this.emitter.on(ALEXA_CONST.ONMESSAGE, this.onAlexaMessage.bind(this))
 
     //
     //set up the text styles object
@@ -66,10 +62,11 @@ export default class BaseScene extends Phaser.Scene {
     this.textStyles = TextStyles.getInstance(this.sys.game.config.width)
     this.gw = this.sys.game.config.width
     this.gh = this.sys.game.config.height
+
   }
 
   // Alexa related events
-  protected onAlexaMessage(message): void {}
+  abstract onAlexaMessage(message): void;
   protected sendMessageToAlexa({ type, payload, cmd = '' }): void {
     if (this.alexa) {
     if (type == "speak") {

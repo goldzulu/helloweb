@@ -29,7 +29,7 @@ export default class TitleScene extends BaseScene {
     super({ key: 'TitleScene' })
   }
 
-  init() {}
+  //async init() {}
 
   preload() {
     //super.preload();
@@ -39,6 +39,14 @@ export default class TitleScene extends BaseScene {
 
   create() {
     super.create();
+
+    //
+    //set up the event dispatcher
+    //
+    this.emitter = EventDispatcher.getInstance()
+
+    //Register all the alexa related events to listen to
+    this.emitter.on(ALEXA_CONST.ONMESSAGE, this.onAlexaMessage,this)
 
     //play the audio
     this.mm.setBackgroundMusic('bensound-theelevatorbossanova')
@@ -53,12 +61,12 @@ export default class TitleScene extends BaseScene {
     this.aGrid.showNumbers();
 
     // play the intro start video
-     this.video = this.add.video(0,0, 'intro'); 
+    // this.video = this.add.video(0,0, 'intro'); 
     // // 60 is the center of an 11x11 grid
-     this.aGrid.placeAtIndex(60,this.video)
-     Align.scaleToGameW(this.video,1,this);
-     this.video.play(true);
-
+     //this.aGrid.placeAtIndex(60,this.video)
+     //Align.scaleToGameW(this.video,1,this);
+     //this.video.play(true);
+     this.setBackground('loadingscreen')
     // new PhaserLogo(this, this.cameras.main.width / 2, 0)
     this.fpsText = new FpsText(this)
 
@@ -75,7 +83,7 @@ export default class TitleScene extends BaseScene {
     
     this.aGrid.placeAtIndex(103, btnNext);
 
-    this.sendMessageToAlexa({type:'ask',payload:'When ready, say begin to start the game'})
+    //this.sendMessageToAlexa({type:'ask',payload:'When ready, say begin to start the game'})
 
   }
 
@@ -83,7 +91,7 @@ export default class TitleScene extends BaseScene {
     //TODO: To make it use a proper object like e.g. AlexaComm 
     this.add
       .text(this.cameras.main.width - 36, 15, `m ${message.type}`, {
-        color: '#000000',
+        color: '#ffffff',
         fontSize: 36,
       })
       .setOrigin(1, 0)
@@ -100,6 +108,7 @@ export default class TitleScene extends BaseScene {
   }
 
   beginGame() {
+    this.emitter.off(ALEXA_CONST.ONMESSAGE, this.onAlexaMessage,this)
     this.scene.start("MainScene");
   }
 }

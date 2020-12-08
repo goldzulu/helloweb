@@ -26,12 +26,34 @@ export default class MainScene extends BaseScene {
     super({ key: 'MainScene' });
   }
 
-  init() {}
+  //init() {}
 
   preload() {}
 
   create() {
         super.create()
+    //
+    //set up the event dispatcher
+    //
+    this.emitter = EventDispatcher.getInstance()
+
+    //Register all the alexa related events to listen to
+    this.emitter.on(ALEXA_CONST.ONMESSAGE, this.onAlexaMessage,this)
+            //
+    //set up the event dispatcher
+    //
+    this.emitter = EventDispatcher.getInstance()
+
+    //Register all the alexa related events to listen to
+    this.emitter.on(ALEXA_CONST.ONMESSAGE, this.onAlexaMessage)
+
+        //
+    //set up the event dispatcher
+    //
+    //this.emitter = EventDispatcher.getInstance()
+
+    //Register all the alexa related events to listen to
+    //EventDispatcher.getInstance().on(ALEXA_CONST.ONMESSAGE, this.onAlexaMessage.bind(this))
 
         this.setBackground('loadingscreen')
 
@@ -56,7 +78,7 @@ export default class MainScene extends BaseScene {
         });
         this.aGrid.placeAtIndex(104, btnNext);
 
-        this.sendMessageToAlexa({type:'ask',payload:'Game started'})
+        //this.sendMessageToAlexa({type:'ask',payload:'Game started'})
   }
 
   onAlexaMessage(message): void {
@@ -82,11 +104,13 @@ export default class MainScene extends BaseScene {
   }
 
   endGame() {
+    this.emitter.off(ALEXA_CONST.ONMESSAGE, this.onAlexaMessage,this)
     this.scene.start("OverScene");
   }
 
   titleScreen() {
-    this.scene.start("TitleScreen");
+    this.emitter.off(ALEXA_CONST.ONMESSAGE, this.onAlexaMessage,this)
+    this.scene.start("TitleScene");
   }
 
   sendMessageToAlexa({ type, payload, cmd = '' }): void {

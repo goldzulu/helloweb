@@ -20,7 +20,8 @@ const webAppBaseURL = `https://${process.env.Domain}`;
 const webAppS3URL = ''
 //const webAppS3URL = 'https://ask-helloweb-default-skillstack-16-s3webappbucket-1q2f8zuglbnog.s3.amazonaws.com/dist/index.html'
 //const webAppLocalURL = ''
-const webAppLocalURL = 'https://b160301b3f04.ngrok.io'
+// note: no trailing slash after the domain name
+const webAppLocalURL = 'https://4264951dd150.ngrok.io'
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
