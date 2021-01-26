@@ -75,7 +75,7 @@ export default class OverScene extends BaseScene {
     this.add
       .text(this.cameras.main.width - 15, 15, `m ${message.type}`, {
         color: '#ffffff',
-        fontSize: 24,
+        fontSize: "24",
       })
       .setOrigin(1, 0)
 

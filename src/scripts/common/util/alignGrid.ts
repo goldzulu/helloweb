@@ -102,7 +102,7 @@ export default class AlignGrid
                 let posString = "x:" + j + "\ny:" + i;
                 var numText = this.scene.add.text(0, 0, posString, {
                     color: '#ff0000',
-                    fontSize: 16,
+                    fontSize: "16",
                     fontStyle: 'bold',
                     backgroundColor: '#000000'
                 });

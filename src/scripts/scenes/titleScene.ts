@@ -84,7 +84,7 @@ export default class TitleScene extends BaseScene {
     this.add
       .text(this.cameras.main.width - 36, 15, `m ${message.type}`, {
         color: '#ffffff',
-        fontSize: 36,
+        fontSize: "36",
       })
       .setOrigin(1, 0)
 
